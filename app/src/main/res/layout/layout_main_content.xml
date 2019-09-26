@@ -9,16 +9,19 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="@dimen/_280sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         android:background="@android:color/white"
         app:cardBackgroundColor="@android:color/white"
         app:cardElevation="@dimen/_4sdp"
-        >
+        android:clickable="true"
+        android:focusable="true">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/_2sdp"
+            android:onClick="mainItemOnClick"
+            android:id="@+id/card_custom_menu"
             >
             <ImageView
                 android:layout_width="@dimen/_28sdp"
@@ -44,17 +47,21 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="@dimen/_280sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         android:background="@android:color/white"
         app:cardBackgroundColor="@android:color/white"
         app:cardElevation="@dimen/_4sdp"
-        >
+        android:clickable="true"
+        android:focusable="true">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:padding="@dimen/_2sdp">
+            android:padding="@dimen/_2sdp"
+            android:id="@+id/card_change_icon"
+            android:onClick="mainItemOnClick"
+            >
             <ImageView
                 android:layout_width="@dimen/_28sdp"
                 android:layout_height="@dimen/_28sdp"
@@ -81,23 +88,27 @@
                 android:id="@+id/img_preview_icon"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-
-                android:src="@drawable/ic_launcher_background"/>
+                android:src="@drawable/ic_launcher_background"
+                android:layout_marginRight="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp" />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="@dimen/_280sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         android:background="@android:color/white"
         app:cardBackgroundColor="@android:color/white"
         app:cardElevation="@dimen/_4sdp"
-        >
+        android:clickable="true"
+        android:focusable="true">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/_2sdp"
+            android:id="@+id/card_change_background"
+            android:onClick="mainItemOnClick"
             >
             <ImageView
                 android:layout_width="@dimen/_28sdp"
@@ -118,12 +129,22 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/_40sdp"
                 android:layout_marginStart="@dimen/_40sdp" />
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_centerVertical="true"
+                android:id="@+id/img_preview_background"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:src="@android:color/black"
+                android:layout_marginRight="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp" />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="@dimen/_280sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:cardCornerRadius="@dimen/_10sdp"
         android:background="@android:color/white"
         app:cardBackgroundColor="@android:color/white"
@@ -167,13 +188,18 @@
         app:cardElevation="@dimen/_4sdp"
         android:layout_width="@dimen/_280sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:background="@android:color/white">
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:focusable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/_2sdp">
+            android:padding="@dimen/_2sdp"
+            android:id="@+id/card_privacy_policy"
+            android:onClick="mainItemOnClick"
+            >
 
             <ImageView
                 android:id="@+id/img_privacy_policy"
@@ -203,13 +229,18 @@
         app:cardElevation="@dimen/_4sdp"
         android:layout_width="@dimen/_280sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:background="@android:color/white">
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:focusable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/_2sdp">
+            android:padding="@dimen/_2sdp"
+            android:id="@+id/card_share"
+            android:onClick="mainItemOnClick"
+          >
 
             <ImageView
                 android:id="@+id/img_share"
@@ -239,14 +270,19 @@
         app:cardElevation="@dimen/_4sdp"
         android:layout_width="@dimen/_280sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:background="@android:color/white"
-        android:layout_marginBottom="@dimen/_30sdp">
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:clickable="true"
+        android:focusable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/_2sdp">
+            android:padding="@dimen/_2sdp"
+            android:id="@+id/card_rate_app"
+            android:onClick="mainItemOnClick"
+            >
 
             <ImageView
                 android:id="@+id/img_rate_app"

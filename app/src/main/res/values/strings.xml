@@ -7,4 +7,15 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="rate_app">Rate app</string>
     <string name="share">Share</string>
+    <string name="save">Save</string>
+
+    <string name="application">Application</string>
+    <string name="lock_screen">Lock screen</string>
+    <string name="multitasking">Multitasking</string>
+    <string name="setting">Setting</string>
+    <string name="back">Back</string>
+    <string name="ring">Ring</string>
+    <string name="silent">Silent</string>
+    <string name="home">Home</string>
+    <string name="notifications">Notification</string>
 </resources>
