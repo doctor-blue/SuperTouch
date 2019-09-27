@@ -8,6 +8,16 @@
     <string name="rate_app">Rate app</string>
     <string name="share">Share</string>
     <string name="save">Save</string>
+    <string name="change_color">Change color</string>
+    <string name="another_time">Another time</string>
+    <string name="ok">Ok</string>
+    <string name="message_active_administration">If you activate this permission, the application will use it to
+        authorize the screen lock operation, when you do not want to use it, you can come here to turn off, to remove
+        the application you also need to turn it off, you have Agree to grant permission?
+    </string>
+    <string name="message_permission_device_admin">You need to enable this permission, if you do not agree, you can cancel, using
+        a quick screen lock will not be accepted
+    </string>
 
     <string name="application">Application</string>
     <string name="lock_screen">Lock screen</string>

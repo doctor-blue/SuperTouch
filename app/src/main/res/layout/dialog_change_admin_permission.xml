@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_5sdp"
+        android:text="@string/message_active_administration"
+        android:textColor="#000000"
+        android:textSize="@dimen/_15sdp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:weightSum="10">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_no_confirm_administration"
+            android:layout_width="wrap_content"
+            android:background="@android:color/white"
+            android:backgroundTint="@android:color/white"
+            android:layout_height="wrap_content"
+            android:text="@string/another_time"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_10sdp"
+            tools:ignore="UnusedAttribute"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_8sdp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_confirm_administration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/white"
+            android:text="@string/ok"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_10sdp"
+            tools:ignore="RelativeOverlap,UnusedAttribute"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp" />
+    </RelativeLayout>
+</LinearLayout>

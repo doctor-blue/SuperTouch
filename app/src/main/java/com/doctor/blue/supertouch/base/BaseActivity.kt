@@ -1,4 +1,4 @@
-package com.doctor.blue.supertouch.activities
+package com.doctor.blue.supertouch.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
