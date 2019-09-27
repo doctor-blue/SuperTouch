@@ -4,7 +4,7 @@ import android.app.admin.DeviceAdminReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.doctor.blue.supertouch.base.Constant
+import com.doctor.blue.supertouch.keys.Constant
 
 class AdminReceiver : DeviceAdminReceiver() {
 
