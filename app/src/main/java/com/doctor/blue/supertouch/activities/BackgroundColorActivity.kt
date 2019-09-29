@@ -5,7 +5,7 @@ import com.doctor.blue.supertouch.base.BaseActivity
 
 class BackgroundColorActivity : BaseActivity() {
     override fun getId(): Int {
-        return R.layout.activity_background_color;
+        return R.layout.activity_background_color
     }
 
     override fun innit() {

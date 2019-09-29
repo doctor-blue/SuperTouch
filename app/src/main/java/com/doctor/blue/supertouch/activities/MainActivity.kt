@@ -22,7 +22,7 @@ import com.doctor.blue.supertouch.event.AdminReceiver
 import com.doctor.blue.supertouch.keys.Constant
 import com.doctor.blue.supertouch.model.HawkHelper
 import com.doctor.blue.supertouch.model.MainSetting
-import com.doctor.blue.supertouch.model.SuperTouchService
+import com.doctor.blue.supertouch.service.SuperTouchService
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_main_content.*
@@ -50,16 +50,19 @@ class MainActivity : BaseActivity() {
         //Innit event for view
         sw_device_admin_permistion.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                showDialogChangeAdminPermission()
+                if (!mainSetting.isAdministrator){
+                    showDialogChangeAdminPermission()
+                }
             } else {
                 devicePolicyManager =
                     getSystemService(Service.DEVICE_POLICY_SERVICE) as DevicePolicyManager
                 component = ComponentName(this, AdminReceiver::class.java)
                 devicePolicyManager.removeActiveAdmin(component)
+                mainSetting.isAdministrator=false
             }
         }
+        val intentSuperTouchService = Intent(this, SuperTouchService::class.java)
         sw_active_touch.setOnCheckedChangeListener { _, isChecked ->
-            val intentSuperTouchService = Intent(this, SuperTouchService::class.java)
             if (isChecked) {
                 if (Build.VERSION.SDK_INT >= 23) {
                     if (!Settings.canDrawOverlays(this)) {
@@ -77,6 +80,7 @@ class MainActivity : BaseActivity() {
             } else {
                 stopService(intentSuperTouchService)
             }
+            SuperTouchService.activity=this
         }
 
     }
@@ -180,4 +184,10 @@ class MainActivity : BaseActivity() {
             super.onActivityResult(requestCode, resultCode, data)
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        HawkHelper.saveMainSetting(mainSetting)
+    }
+
 }

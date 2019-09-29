@@ -27,5 +27,22 @@ class HawkHelper {
             }
             return mainSetting
         }
+
+        fun saveMainMenuSetting(menuMainSetting: MainMenuSetting){
+            val data:String= gson.toJson(menuMainSetting)
+            Hawk.put(Constant.MENU_MAIN_SETTING,data)
+        }
+        fun getMainMenuSetting():MainMenuSetting{
+            val mainMenuSetting:MainMenuSetting
+            val data:String= Hawk.get(Constant.MAIN_SETTING,"")
+            if (data.isEmpty()){
+                mainMenuSetting= MainMenuSetting()
+                mainMenuSetting.available=false
+            }else{
+                mainMenuSetting= gson.fromJson(data,MainMenuSetting::class.java)
+                mainMenuSetting.available=true
+            }
+            return mainMenuSetting
+        }
     }
 }

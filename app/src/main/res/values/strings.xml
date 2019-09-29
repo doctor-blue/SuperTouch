@@ -18,6 +18,17 @@
     <string name="message_permission_device_admin">You need to enable this permission, if you do not agree, you can cancel, using
         a quick screen lock will not be accepted
     </string>
+    <string name="space"> </string>
+    <string name="accessibility_service_description">
+        When you enable this permission the application will use it to manipulate
+        Back, Home, recent applications and notifications
+        Rest assured the application does not collect any of your information
+    </string>
+    <string name="notice_grant_device_admin">You need to grant device admin rights</string>
+    <string name="ring_mode">Ring mode</string>
+    <string name="control">Control</string>
+    <string name="volume_up">Volume up</string>
+    <string name="volume_down">Volume down</string>
 
     <string name="application">Application</string>
     <string name="lock_screen">Lock screen</string>
