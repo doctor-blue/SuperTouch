@@ -34,7 +34,7 @@ class HawkHelper {
         }
         fun getMainMenuSetting():MainMenuSetting{
             val mainMenuSetting:MainMenuSetting
-            val data:String= Hawk.get(Constant.MAIN_SETTING,"")
+            val data:String= Hawk.get(Constant.MENU_MAIN_SETTING,"")
             if (data.isEmpty()){
                 mainMenuSetting= MainMenuSetting()
                 mainMenuSetting.available=false
@@ -43,6 +43,22 @@ class HawkHelper {
                 mainMenuSetting.available=true
             }
             return mainMenuSetting
+        }
+        fun getItemApplication():ItemApplication{
+            val itemApplication:ItemApplication
+            val data:String= Hawk.get(Constant.PACKEGE_NAME_APP,"")
+            if (data.isEmpty()){
+                itemApplication= ItemApplication()
+                itemApplication.available=false
+            }else{
+                itemApplication= gson.fromJson(data,ItemApplication::class.java)
+                itemApplication.available=true
+            }
+            return itemApplication
+        }
+        fun saveItemApplication(itemApplication: ItemApplication){
+            val data:String= gson.toJson(itemApplication)
+            Hawk.put(Constant.PACKEGE_NAME_APP,data)
         }
     }
 }

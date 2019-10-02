@@ -25,6 +25,9 @@
         Rest assured the application does not collect any of your information
     </string>
     <string name="notice_grant_device_admin">You need to grant device admin rights</string>
+    <string name="warning_Accessibility">Find assistive touch and turn on the accessibility to make the button work
+        properly
+    </string>
     <string name="ring_mode">Ring mode</string>
     <string name="control">Control</string>
     <string name="volume_up">Volume up</string>

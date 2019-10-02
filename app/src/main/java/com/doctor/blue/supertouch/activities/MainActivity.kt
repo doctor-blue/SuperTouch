@@ -50,7 +50,7 @@ class MainActivity : BaseActivity() {
         //Innit event for view
         sw_device_admin_permistion.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                if (!mainSetting.isAdministrator){
+                if (!mainSetting.isAdministrator) {
                     showDialogChangeAdminPermission()
                 }
             } else {
@@ -58,7 +58,7 @@ class MainActivity : BaseActivity() {
                     getSystemService(Service.DEVICE_POLICY_SERVICE) as DevicePolicyManager
                 component = ComponentName(this, AdminReceiver::class.java)
                 devicePolicyManager.removeActiveAdmin(component)
-                mainSetting.isAdministrator=false
+                mainSetting.isAdministrator = false
             }
         }
         val intentSuperTouchService = Intent(this, SuperTouchService::class.java)
@@ -70,7 +70,7 @@ class MainActivity : BaseActivity() {
                             Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                             Uri.parse("package:$packageName")
                         )
-                        startActivityForResult(intent,125)
+                        startActivityForResult(intent, 125)
                     } else {
                         startService(intentSuperTouchService)
                     }
@@ -80,9 +80,8 @@ class MainActivity : BaseActivity() {
             } else {
                 stopService(intentSuperTouchService)
             }
-            SuperTouchService.activity=this
+            SuperTouchService.activity = this
         }
-
     }
 
     fun mainItemOnClick(view: View) {
@@ -160,7 +159,7 @@ class MainActivity : BaseActivity() {
 
     private fun checkServiceRunning(serviceClass: Class<*>): Boolean {
         val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service:ActivityManager.RunningServiceInfo in manager.getRunningServices(Integer.MAX_VALUE)) {
+        for (service: ActivityManager.RunningServiceInfo in manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.name == service.service.className) {
                 return true
             }

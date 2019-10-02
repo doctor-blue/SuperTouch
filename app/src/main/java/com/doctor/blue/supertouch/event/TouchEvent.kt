@@ -9,6 +9,8 @@ import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.os.Build
+import android.provider.Settings
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -16,13 +18,14 @@ import com.doctor.blue.supertouch.R
 import com.doctor.blue.supertouch.activities.MainActivity
 import com.doctor.blue.supertouch.keys.Constant
 import com.doctor.blue.supertouch.model.HawkHelper
+import com.doctor.blue.supertouch.service.SuperTouchAccessibilityService
 
 @SuppressLint("StaticFieldLeak")
 object TouchEvent {
     lateinit var imgTouch: ImageView
     lateinit var txtNameTouch: TextView
     lateinit var context: Context
-    private val mainSetting = HawkHelper.getMainSetting()
+    private var mainSetting = HawkHelper.getMainSetting()
     lateinit var activity: Activity
     fun mainMenuEvent(id: String) {
         when (id) {
@@ -41,12 +44,15 @@ object TouchEvent {
                 backHomeEvent()
             }
             Constant.idNotificationItem -> {
+                notificationEvent()
             }
             Constant.idMultitaskingItem -> {
+                multitaskingEvent()
             }
             Constant.idControlItem -> {
             }
             Constant.idBackItem -> {
+                backSpaceEvent()
             }
             Constant.idRingModeItem -> {
                 ringModeEvent()
@@ -133,4 +139,61 @@ object TouchEvent {
             AudioManager.FLAG_SHOW_UI
         )
     }
+
+    private fun backSpaceEvent() {
+        mainSetting=HawkHelper.getMainSetting()
+        if (mainSetting.isAccessibilityConnected) {
+            val serviceIntent = Intent(context, SuperTouchAccessibilityService::class.java)
+            serviceIntent.action = Constant.actionBackSpace
+            context.startService(serviceIntent)
+
+        } else {
+            Toast.makeText(
+                activity,
+                activity.resources.getString(R.string.warning_Accessibility),
+                Toast.LENGTH_SHORT
+            ).show()
+            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            activity.startActivity(intent)
+        }
+    }
+
+    private fun multitaskingEvent(){
+        mainSetting=HawkHelper.getMainSetting()
+        if (!mainSetting.isAccessibilityConnected) {
+            Toast.makeText(
+                activity,
+                activity.resources.getString(R.string.warning_Accessibility),
+                Toast.LENGTH_SHORT
+            ).show()
+            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            activity.startActivity(intent)
+        } else {
+            val serviceIntent = Intent(context, SuperTouchAccessibilityService::class.java)
+            serviceIntent.action = Constant.actionMultitasking
+           context.startService(serviceIntent)
+        }
+    }
+
+    private fun notificationEvent(){
+        mainSetting=HawkHelper.getMainSetting()
+        if (!mainSetting.isAccessibilityConnected) {
+            Toast.makeText(
+                activity,
+                activity.resources.getString(R.string.warning_Accessibility),
+                Toast.LENGTH_SHORT
+            ).show()
+            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            activity.startActivity(intent)
+        } else {
+            val serviceIntent = Intent(context, SuperTouchAccessibilityService::class.java)
+            serviceIntent.action = Constant.actionNotification
+            context.startService(serviceIntent)
+        }
+    }
+
+
 }

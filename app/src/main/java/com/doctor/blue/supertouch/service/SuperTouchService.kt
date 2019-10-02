@@ -15,9 +15,9 @@ import android.view.animation.AlphaAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import com.doctor.blue.supertouch.R
-import com.doctor.blue.supertouch.activities.MainActivity
 import com.doctor.blue.supertouch.database.SuperTouchDatabase
 import com.doctor.blue.supertouch.event.TouchEvent
+import com.doctor.blue.supertouch.keys.Constant
 import com.doctor.blue.supertouch.model.HawkHelper
 import java.util.*
 
@@ -29,8 +29,8 @@ class SuperTouchService : Service() {
     private var isFloatingButtonShow: Boolean = false
     private val mRunnable = Runnable { setAnimationFloatingButton(true) }
     private var mainMenuSetting = HawkHelper.getMainMenuSetting()
-    private var isMainMenu=true
-    private var isControlMenu=false
+    private var isMainMenu = true
+    private var isControlMenu = false
     private lateinit var touchView: View
     private lateinit var imgItemCustom11: ImageView
     private lateinit var txtItemCustom11: TextView
@@ -51,17 +51,16 @@ class SuperTouchService : Service() {
     private lateinit var imgItemCustom33: ImageView
     private lateinit var txtItemCustom33: TextView
 
-    companion object{
+    companion object {
         @SuppressLint("StaticFieldLeak")
-        lateinit var activity:Activity
+        lateinit var activity: Activity
     }
-
 
 
     @SuppressLint("InflateParams")
     override fun onCreate() {
         super.onCreate()
-        touchView=LayoutInflater.from(this).inflate(R.layout.layout_item_touch,null)
+        touchView = LayoutInflater.from(this).inflate(R.layout.layout_item_touch, null)
         innitFloatingButton()
         innitView()
         innitEventView()
@@ -147,9 +146,8 @@ class SuperTouchService : Service() {
                         if (xDiff < 10 && yDiff < 10 && timeDelay < 1000) {
                             if (isClick) {
                                 showMainMenu()
-                                isClick=false
-                            }
-                            else{
+                                isClick = false
+                            } else {
                                 showTouchView()
                             }
 
@@ -239,7 +237,7 @@ class SuperTouchService : Service() {
                                 // return floating button
                                 hideTouchView()
                                 false
-                            }else {
+                            } else {
                                 showTouchView()
                                 true
                             }
@@ -252,134 +250,188 @@ class SuperTouchService : Service() {
 
         })
     }
-    private fun hideTouchView(){
+
+    private fun hideTouchView() {
         touchView.visibility = View.GONE
         mFloatingButton?.visibility = View.VISIBLE
     }
-    private fun showTouchView(){
-        touchView.visibility=View.VISIBLE
+
+    private fun showTouchView() {
+        touchView.visibility = View.VISIBLE
         mFloatingButton?.visibility = View.GONE
     }
 
-    private fun innitEventView(){
-        imgItemCustom11.setOnClickListener{
-            TouchEvent.imgTouch=it as ImageView
-            TouchEvent.txtNameTouch=txtItemCustom11
+    private fun innitEventView() {
+        val itemApplication = HawkHelper.getItemApplication()
+        imgItemCustom11.setOnClickListener {
+            TouchEvent.imgTouch = it as ImageView
+            TouchEvent.txtNameTouch = txtItemCustom11
             when {
-                isMainMenu -> {TouchEvent.mainMenuEvent(mainMenuSetting.idItem11);hideTouchView()}
-                isControlMenu -> {
+                isMainMenu -> {
+                    val id = mainMenuSetting.idItem11
+                    if (id != Constant.idApplicationItem) {
+                        TouchEvent.mainMenuEvent(id)
+                        hideTouchView()
+                    } else
+                        innitApplicationMenu()
 
+                }
+                isControlMenu -> {
+                    starApplication(itemApplication.packageName11)
                 }
                 else -> {
 
                 }
             }
         }
-        imgItemCustom12.setOnClickListener{
-            TouchEvent.imgTouch=it as ImageView
-            TouchEvent.txtNameTouch=txtItemCustom12
+        imgItemCustom12.setOnClickListener {
+            TouchEvent.imgTouch = it as ImageView
+            TouchEvent.txtNameTouch = txtItemCustom12
             when {
-                isMainMenu -> {TouchEvent.mainMenuEvent(mainMenuSetting.idItem12);hideTouchView()}
+                isMainMenu -> {
+                    val id = mainMenuSetting.idItem12
+                    if (id != Constant.idApplicationItem) {
+                        TouchEvent.mainMenuEvent(id)
+                        hideTouchView()
+                    } else
+                        innitApplicationMenu()
+                }
                 isControlMenu -> {
 
                 }
                 else -> {
+                    starApplication(itemApplication.packageName12)
 
                 }
             }
         }
-        imgItemCustom13.setOnClickListener{
-            TouchEvent.imgTouch=it as ImageView
-            TouchEvent.txtNameTouch=txtItemCustom13
+        imgItemCustom13.setOnClickListener {
+            TouchEvent.imgTouch = it as ImageView
+            TouchEvent.txtNameTouch = txtItemCustom13
             when {
-                isMainMenu -> {TouchEvent.mainMenuEvent(mainMenuSetting.idItem13);hideTouchView()}
+                isMainMenu -> {
+                    val id = mainMenuSetting.idItem13
+                    if (id != Constant.idApplicationItem) {
+                        TouchEvent.mainMenuEvent(id)
+                        hideTouchView()
+                    } else
+                        innitApplicationMenu()
+                }
                 isControlMenu -> {
 
                 }
                 else -> {
-
+                    starApplication(itemApplication.packageName12)
                 }
             }
         }
-        imgItemCustom21.setOnClickListener{
-            TouchEvent.imgTouch=it as ImageView
-            TouchEvent.txtNameTouch=txtItemCustom21
+        imgItemCustom21.setOnClickListener {
+            TouchEvent.imgTouch = it as ImageView
+            TouchEvent.txtNameTouch = txtItemCustom21
             when {
-                isMainMenu -> {TouchEvent.mainMenuEvent(mainMenuSetting.idItem21);hideTouchView()}
+                isMainMenu -> {
+                    val id = mainMenuSetting.idItem21
+                    if (id != Constant.idApplicationItem) {
+                        TouchEvent.mainMenuEvent(id)
+                        hideTouchView()
+                    } else
+                        innitApplicationMenu()
+                }
                 isControlMenu -> {
 
                 }
                 else -> {
-
+                    starApplication(itemApplication.packageName12)
                 }
             }
         }
-        imgItemCustom22.setOnClickListener{
-            TouchEvent.imgTouch=it as ImageView
-            TouchEvent.txtNameTouch=txtItemCustom22
+        imgItemCustom22.setOnClickListener {
+            TouchEvent.imgTouch = it as ImageView
+            TouchEvent.txtNameTouch = txtItemCustom22
+
+        }
+        imgItemCustom23.setOnClickListener {
+            TouchEvent.imgTouch = it as ImageView
+            TouchEvent.txtNameTouch = txtItemCustom23
             when {
-                isMainMenu ->{ TouchEvent.mainMenuEvent(mainMenuSetting.idItem22);hideTouchView()}
+                isMainMenu -> {
+                    val id = mainMenuSetting.idItem23
+                    if (id != Constant.idApplicationItem) {
+                        TouchEvent.mainMenuEvent(id)
+                        hideTouchView()
+                    } else
+                        innitApplicationMenu()
+                }
                 isControlMenu -> {
 
                 }
                 else -> {
-
+                    starApplication(itemApplication.packageName23)
                 }
             }
         }
-        imgItemCustom23.setOnClickListener{
-            TouchEvent.imgTouch=it as ImageView
-            TouchEvent.txtNameTouch=txtItemCustom23
+        imgItemCustom31.setOnClickListener {
+            TouchEvent.imgTouch = it as ImageView
+            TouchEvent.txtNameTouch = txtItemCustom31
             when {
-                isMainMenu ->{ TouchEvent.mainMenuEvent(mainMenuSetting.idItem23);hideTouchView()}
+                isMainMenu -> {
+                    val id = mainMenuSetting.idItem31
+                    if (id != Constant.idApplicationItem) {
+                        TouchEvent.mainMenuEvent(id)
+                        hideTouchView()
+                    } else
+                        innitApplicationMenu()
+                }
                 isControlMenu -> {
 
                 }
                 else -> {
-
+                    starApplication(itemApplication.packageName31)
                 }
             }
         }
-        imgItemCustom31.setOnClickListener{
-            TouchEvent.imgTouch=it as ImageView
-            TouchEvent.txtNameTouch=txtItemCustom31
+        imgItemCustom32.setOnClickListener {
+            TouchEvent.imgTouch = it as ImageView
+            TouchEvent.txtNameTouch = txtItemCustom32
             when {
-                isMainMenu -> {TouchEvent.mainMenuEvent(mainMenuSetting.idItem31);hideTouchView()}
+                isMainMenu -> {
+                    val id = mainMenuSetting.idItem32
+                    if (id != Constant.idApplicationItem) {
+                        TouchEvent.mainMenuEvent(id)
+                        hideTouchView()
+                    } else
+                        innitApplicationMenu()
+                }
                 isControlMenu -> {
 
                 }
                 else -> {
-
+                    starApplication(itemApplication.packageName32)
                 }
             }
         }
-        imgItemCustom32.setOnClickListener{
-            TouchEvent.imgTouch=it as ImageView
-            TouchEvent.txtNameTouch=txtItemCustom32
+        imgItemCustom33.setOnClickListener {
+            TouchEvent.imgTouch = it as ImageView
+            TouchEvent.txtNameTouch = txtItemCustom33
             when {
-                isMainMenu -> {TouchEvent.mainMenuEvent(mainMenuSetting.idItem32);hideTouchView()}
+                isMainMenu -> {
+                    val id = mainMenuSetting.idItem33
+                    if (id != Constant.idApplicationItem) {
+                        TouchEvent.mainMenuEvent(id)
+                        hideTouchView()
+                    } else
+                        innitApplicationMenu()
+                }
                 isControlMenu -> {
 
                 }
                 else -> {
-
-                }
-            }
-        }
-        imgItemCustom33.setOnClickListener{
-            TouchEvent.imgTouch=it as ImageView
-            TouchEvent.txtNameTouch=txtItemCustom33
-            when {
-                isMainMenu -> {TouchEvent.mainMenuEvent(mainMenuSetting.idItem33);hideTouchView()}
-                isControlMenu -> {
-
-                }
-                else -> {
-
+                    starApplication(itemApplication.packageName33)
                 }
             }
         }
     }
+
     private fun innitView() {
         imgItemCustom11 = touchView.findViewById(R.id.img_item_custom_1_1)
         txtItemCustom11 = touchView.findViewById(R.id.txt_item_custom_1_1)
@@ -399,8 +451,8 @@ class SuperTouchService : Service() {
         txtItemCustom32 = touchView.findViewById(R.id.txt_item_custom_3_2)
         imgItemCustom33 = touchView.findViewById(R.id.img_item_custom_3_3)
         txtItemCustom33 = touchView.findViewById(R.id.txt_item_custom_3_3)
-        TouchEvent.context=this
-        TouchEvent.activity= activity
+        TouchEvent.context = this
+        TouchEvent.activity = activity
     }
 
     private fun innitMainMenu() {
@@ -433,6 +485,46 @@ class SuperTouchService : Service() {
 
         imgItemCustom33.setImageResource(getIconId(mainMenuSetting.idItem33))
         txtItemCustom33.text = resources.getText(getNameItemId(mainMenuSetting.idItem33))
+
+        isControlMenu = false
+        isMainMenu = false
+
+
+    }
+
+    private fun innitApplicationMenu() {
+        val itemApplication = HawkHelper.getItemApplication()
+
+        val setInfomationItem: (ImageView, String) -> Unit = { imgItem, packageName ->
+            if (packageName.isEmpty())
+                imgItem.setImageResource(R.drawable.ic_add)
+            else {
+                val icon = this.packageManager?.getApplicationIcon(packageName)
+                imgItem.setImageDrawable(icon)
+            }
+
+        }
+        txtItemCustom33.text = ""
+        txtItemCustom32.text = ""
+        txtItemCustom31.text = ""
+        txtItemCustom23.text = ""
+        txtItemCustom22.text = ""
+        txtItemCustom21.text = ""
+        txtItemCustom13.text = ""
+        txtItemCustom12.text = ""
+        txtItemCustom11.text = ""
+
+        setInfomationItem(imgItemCustom11, itemApplication.packageName11)
+        setInfomationItem(imgItemCustom12, itemApplication.packageName12)
+        setInfomationItem(imgItemCustom13, itemApplication.packageName13)
+        setInfomationItem(imgItemCustom21, itemApplication.packageName21)
+        setInfomationItem(imgItemCustom23, itemApplication.packageName23)
+        setInfomationItem(imgItemCustom31, itemApplication.packageName31)
+        setInfomationItem(imgItemCustom32, itemApplication.packageName32)
+        setInfomationItem(imgItemCustom33, itemApplication.packageName33)
+
+        isMainMenu = false
+        isControlMenu = false
 
 
     }
@@ -487,6 +579,13 @@ class SuperTouchService : Service() {
         }
     }
 
+    private fun starApplication(packageName: String) {
+        if (packageName.isNotEmpty()) {
+            val intent = TouchEvent.context.packageManager.getLaunchIntentForPackage(packageName)
+            intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            TouchEvent.activity.startActivity(intent)
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -495,6 +594,7 @@ class SuperTouchService : Service() {
             isFloatingViewAttached = false
         }
     }
+
     override fun onBind(p0: Intent?): IBinder? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

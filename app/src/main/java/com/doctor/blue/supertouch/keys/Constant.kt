@@ -4,6 +4,7 @@ object Constant {
     const val TAG = "SUPER_TOUCH"
     const val MAIN_SETTING = "MAIN_SETTING"
     const val MENU_MAIN_SETTING="MENU_MAIN_SETTING"
+    const val PACKEGE_NAME_APP="PACKEGE_NAME_APP"
     const val idNormal="normal_item"
     const val idApplicationItem="application_item"
     const val idRingModeItem="ring_mode_item"
