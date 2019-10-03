@@ -46,7 +46,7 @@ class HawkHelper {
         }
         fun getItemApplication():ItemApplication{
             val itemApplication:ItemApplication
-            val data:String= Hawk.get(Constant.PACKEGE_NAME_APP,"")
+            val data:String= Hawk.get(Constant.PACKAGE_NAME_APP,"")
             if (data.isEmpty()){
                 itemApplication= ItemApplication()
                 itemApplication.available=false
@@ -58,7 +58,7 @@ class HawkHelper {
         }
         fun saveItemApplication(itemApplication: ItemApplication){
             val data:String= gson.toJson(itemApplication)
-            Hawk.put(Constant.PACKEGE_NAME_APP,data)
+            Hawk.put(Constant.PACKAGE_NAME_APP,data)
         }
     }
 }

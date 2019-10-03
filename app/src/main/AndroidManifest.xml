@@ -13,10 +13,8 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -24,13 +22,9 @@
     <uses-permission
         android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
         tools:ignore="ProtectedPermissions" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -45,7 +39,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SuperTouch">
-        <activity android:name=".activities.BackgroundColorActivity"></activity>
+        <activity android:name=".activities.ListApplicationActivity"></activity>
+        <activity android:name=".activities.BackgroundColorActivity" />
         <activity android:name=".activities.CustomMenuActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
@@ -54,11 +49,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".service.SuperTouchService"
             android:enabled="true"
             android:exported="true"
-            tools:ignore="ExportedService"/>
+            tools:ignore="ExportedService" />
         <service
             android:name=".service.SuperTouchAccessibilityService"
             android:enabled="true"
@@ -67,12 +63,13 @@
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <meta-data
                 android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config"/>
+                android:resource="@xml/accessibility_service_config" />
 
             <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService"/>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
         </service>
+
         <receiver
             android:name=".event.AdminReceiver"
             android:permission="android.permission.BIND_DEVICE_ADMIN">

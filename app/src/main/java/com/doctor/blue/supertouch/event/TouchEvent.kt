@@ -10,11 +10,11 @@ import android.content.Intent
 import android.media.AudioManager
 import android.os.Build
 import android.provider.Settings
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.doctor.blue.supertouch.R
+import com.doctor.blue.supertouch.activities.ListApplicationActivity
 import com.doctor.blue.supertouch.activities.MainActivity
 import com.doctor.blue.supertouch.keys.Constant
 import com.doctor.blue.supertouch.model.HawkHelper
@@ -56,8 +56,6 @@ object TouchEvent {
             }
             Constant.idRingModeItem -> {
                 ringModeEvent()
-            }
-            Constant.idApplicationItem -> {
             }
         }
     }
@@ -116,8 +114,8 @@ object TouchEvent {
                 activity.resources.getString(R.string.notice_grant_device_admin),
                 Toast.LENGTH_SHORT
             )
-            val intent= Intent(activity, MainActivity::class.java)
-            intent.flags=Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            val intent = Intent(activity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             activity.startActivity(intent)
         }
     }
@@ -141,7 +139,7 @@ object TouchEvent {
     }
 
     private fun backSpaceEvent() {
-        mainSetting=HawkHelper.getMainSetting()
+        mainSetting = HawkHelper.getMainSetting()
         if (mainSetting.isAccessibilityConnected) {
             val serviceIntent = Intent(context, SuperTouchAccessibilityService::class.java)
             serviceIntent.action = Constant.actionBackSpace
@@ -159,8 +157,8 @@ object TouchEvent {
         }
     }
 
-    private fun multitaskingEvent(){
-        mainSetting=HawkHelper.getMainSetting()
+    private fun multitaskingEvent() {
+        mainSetting = HawkHelper.getMainSetting()
         if (!mainSetting.isAccessibilityConnected) {
             Toast.makeText(
                 activity,
@@ -173,12 +171,12 @@ object TouchEvent {
         } else {
             val serviceIntent = Intent(context, SuperTouchAccessibilityService::class.java)
             serviceIntent.action = Constant.actionMultitasking
-           context.startService(serviceIntent)
+            context.startService(serviceIntent)
         }
     }
 
-    private fun notificationEvent(){
-        mainSetting=HawkHelper.getMainSetting()
+    private fun notificationEvent() {
+        mainSetting = HawkHelper.getMainSetting()
         if (!mainSetting.isAccessibilityConnected) {
             Toast.makeText(
                 activity,
@@ -194,6 +192,5 @@ object TouchEvent {
             context.startService(serviceIntent)
         }
     }
-
 
 }

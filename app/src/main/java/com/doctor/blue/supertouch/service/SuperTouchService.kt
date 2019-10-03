@@ -15,6 +15,7 @@ import android.view.animation.AlphaAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import com.doctor.blue.supertouch.R
+import com.doctor.blue.supertouch.activities.ListApplicationActivity
 import com.doctor.blue.supertouch.database.SuperTouchDatabase
 import com.doctor.blue.supertouch.event.TouchEvent
 import com.doctor.blue.supertouch.keys.Constant
@@ -29,6 +30,7 @@ class SuperTouchService : Service() {
     private var isFloatingButtonShow: Boolean = false
     private val mRunnable = Runnable { setAnimationFloatingButton(true) }
     private var mainMenuSetting = HawkHelper.getMainMenuSetting()
+    private var itemApplication=HawkHelper.getItemApplication()
     private var isMainMenu = true
     private var isControlMenu = false
     private lateinit var touchView: View
@@ -146,7 +148,7 @@ class SuperTouchService : Service() {
                         if (xDiff < 10 && yDiff < 10 && timeDelay < 1000) {
                             if (isClick) {
                                 showMainMenu()
-                                isClick = false
+                                isClick=false
                             } else {
                                 showTouchView()
                             }
@@ -259,10 +261,10 @@ class SuperTouchService : Service() {
     private fun showTouchView() {
         touchView.visibility = View.VISIBLE
         mFloatingButton?.visibility = View.GONE
+        innitMainMenu()
     }
 
     private fun innitEventView() {
-        val itemApplication = HawkHelper.getItemApplication()
         imgItemCustom11.setOnClickListener {
             TouchEvent.imgTouch = it as ImageView
             TouchEvent.txtNameTouch = txtItemCustom11
@@ -277,9 +279,10 @@ class SuperTouchService : Service() {
 
                 }
                 isControlMenu -> {
-                    starApplication(itemApplication.packageName11)
+
                 }
                 else -> {
+                    starApplication(itemApplication.packageName11)
 
                 }
             }
@@ -321,7 +324,7 @@ class SuperTouchService : Service() {
 
                 }
                 else -> {
-                    starApplication(itemApplication.packageName12)
+                    starApplication(itemApplication.packageName13)
                 }
             }
         }
@@ -341,7 +344,7 @@ class SuperTouchService : Service() {
 
                 }
                 else -> {
-                    starApplication(itemApplication.packageName12)
+                    starApplication(itemApplication.packageName21)
                 }
             }
         }
@@ -430,8 +433,70 @@ class SuperTouchService : Service() {
                 }
             }
         }
-    }
 
+        imgItemCustom11.setOnLongClickListener{
+            if (!isMainMenu&&!isControlMenu){
+                selectApplication(Constant.itemApp11)
+                hideTouchView()
+            }
+            return@setOnLongClickListener true
+        }
+        imgItemCustom12.setOnLongClickListener{
+            if (!isMainMenu&&!isControlMenu){
+                selectApplication(Constant.itemApp12)
+                hideTouchView()
+            }
+            return@setOnLongClickListener true
+        }
+        imgItemCustom13.setOnLongClickListener{
+            if (!isMainMenu&&!isControlMenu){
+                selectApplication(Constant.itemApp13)
+                hideTouchView()
+            }
+            return@setOnLongClickListener true
+        }
+        imgItemCustom21.setOnLongClickListener{
+            if (!isMainMenu&&!isControlMenu){
+                selectApplication(Constant.itemApp21)
+                hideTouchView()
+            }
+            return@setOnLongClickListener true
+        }
+        imgItemCustom23.setOnLongClickListener{
+            if (!isMainMenu&&!isControlMenu){
+                selectApplication(Constant.itemApp23)
+                hideTouchView()
+            }
+            return@setOnLongClickListener true
+        }
+        imgItemCustom31.setOnLongClickListener{
+            if (!isMainMenu&&!isControlMenu){
+                selectApplication(Constant.itemApp31)
+                hideTouchView()
+            }
+            return@setOnLongClickListener true
+        }
+        imgItemCustom32.setOnLongClickListener{
+            if (!isMainMenu&&!isControlMenu){
+                selectApplication(Constant.itemApp32)
+                hideTouchView()
+            }
+            return@setOnLongClickListener true
+        }
+        imgItemCustom33.setOnLongClickListener{
+            if (!isMainMenu&&!isControlMenu){
+                selectApplication(Constant.itemApp33)
+                hideTouchView()
+            }
+            return@setOnLongClickListener true
+        }
+    }
+    private fun selectApplication(itemApp:String) {
+        val intent = Intent(TouchEvent.activity, ListApplicationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intent.putExtra(Constant.PICK_APP, itemApp)
+        TouchEvent.activity.startActivity(intent)
+    }
     private fun innitView() {
         imgItemCustom11 = touchView.findViewById(R.id.img_item_custom_1_1)
         txtItemCustom11 = touchView.findViewById(R.id.txt_item_custom_1_1)
@@ -487,13 +552,13 @@ class SuperTouchService : Service() {
         txtItemCustom33.text = resources.getText(getNameItemId(mainMenuSetting.idItem33))
 
         isControlMenu = false
-        isMainMenu = false
+        isMainMenu = true
 
 
     }
 
     private fun innitApplicationMenu() {
-        val itemApplication = HawkHelper.getItemApplication()
+        itemApplication = HawkHelper.getItemApplication()
 
         val setInfomationItem: (ImageView, String) -> Unit = { imgItem, packageName ->
             if (packageName.isEmpty())
@@ -581,9 +646,10 @@ class SuperTouchService : Service() {
 
     private fun starApplication(packageName: String) {
         if (packageName.isNotEmpty()) {
-            val intent = TouchEvent.context.packageManager.getLaunchIntentForPackage(packageName)
+            hideTouchView()
+            val intent = packageManager.getLaunchIntentForPackage(packageName)
             intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            TouchEvent.activity.startActivity(intent)
+            activity.startActivity(intent)
         }
     }
 
