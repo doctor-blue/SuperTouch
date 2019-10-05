@@ -30,9 +30,10 @@ import kotlinx.android.synthetic.main.layout_main_content.*
 class MainActivity : BaseActivity() {
     private lateinit var devicePolicyManager: DevicePolicyManager
     private lateinit var component: ComponentName
-    private val REQUEST_CODE = 123
     private lateinit var mainSetting: MainSetting
-
+    companion object {
+        private const val REQUEST_CODE = 123
+    }
     override fun getId(): Int {
         return R.layout.activity_main
     }
@@ -145,7 +146,7 @@ class MainActivity : BaseActivity() {
                     DevicePolicyManager.EXTRA_ADD_EXPLANATION,
                     resources.getString(R.string.message_permission_device_admin)
                 )
-                startActivityForResult(intent, REQUEST_CODE)
+                startActivityForResult(intent, Companion.REQUEST_CODE)
             }
             dialogChangeAdministration.dismiss()
         }
@@ -168,7 +169,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == Companion.REQUEST_CODE) {
             Log.e(Constant.TAG, "$resultCode \n $requestCode")
             if (resultCode == Activity.RESULT_OK) {
                 Log.e(Constant.TAG, " success $resultCode \n $requestCode")
@@ -188,5 +189,7 @@ class MainActivity : BaseActivity() {
         super.onDestroy()
         HawkHelper.saveMainSetting(mainSetting)
     }
+
+
 
 }

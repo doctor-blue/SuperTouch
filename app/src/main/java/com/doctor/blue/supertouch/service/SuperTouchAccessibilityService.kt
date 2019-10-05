@@ -41,7 +41,6 @@ class SuperTouchAccessibilityService : AccessibilityService() {
         try {
             performGlobalAction(GLOBAL_ACTION_BACK)
         } catch (e: Exception) {
-            Log.e("hihi", e.toString())
             e.printStackTrace()
         }
     }
@@ -56,8 +55,8 @@ class SuperTouchAccessibilityService : AccessibilityService() {
 
     override fun onServiceConnected() {
         super.onServiceConnected()
-        Log.e("hehe", "connected")
         val mainSetting = HawkHelper.getMainSetting()
+        Log.d("haha",""+mainSetting.isAccessibilityConnected)
         mainSetting.isAccessibilityConnected = true
         HawkHelper.saveMainSetting(mainSetting)
     }

@@ -54,7 +54,7 @@
                         android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                     <ImageView
-                        android:id="@+id/img_item_custom_1_1"
+                        android:id="@+id/img_item_custom_menu_1_1"
                         android:scaleType="fitCenter"
                         android:padding="@dimen/_14sdp"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -62,11 +62,12 @@
                         android:src="@drawable/ic_panel_application"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription"
+                        android:onClick="customMenuItemOnClick" />
                 </FrameLayout>
                 <TextView
                     android:layout_weight="2"
-                    android:id="@+id/txt_item_custom_1_1"
+                    android:id="@+id/txt_item_custom_menu_1_1"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_10sdp"
@@ -95,7 +96,7 @@
                         android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                     <ImageView
-                        android:id="@+id/img_item_custom_1_2"
+                        android:id="@+id/img_item_custom_menu_1_2"
                         android:scaleType="fitCenter"
                         android:padding="@dimen/_14sdp"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -103,12 +104,13 @@
                         android:src="@drawable/ic_lock_screen"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription"
+                        android:onClick="customMenuItemOnClick"/>
                 </FrameLayout>
 
                 <TextView
                     android:layout_weight="2"
-                    android:id="@+id/txt_item_custom_1_2"
+                    android:id="@+id/txt_item_custom_menu_1_2"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_10sdp"
@@ -137,7 +139,7 @@
                         android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                     <ImageView
-                        android:id="@+id/img_item_custom_1_3"
+                        android:id="@+id/img_item_custom_menu_1_3"
                         android:scaleType="fitCenter"
                         android:padding="@dimen/_14sdp"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -145,11 +147,12 @@
                         android:src="@drawable/ic_settings"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription"
+                        android:onClick="customMenuItemOnClick"/>
                 </FrameLayout>
 
                 <TextView
-                    android:id="@+id/txt_item_custom_1_3"
+                    android:id="@+id/txt_item_custom_menu_1_3"
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
@@ -188,7 +191,7 @@
                         android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                     <ImageView
-                        android:id="@+id/img_item_custom_2_1"
+                        android:id="@+id/img_item_custom_menu_2_1"
                         android:scaleType="fitCenter"
                         android:padding="@dimen/_14sdp"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -196,12 +199,13 @@
                         android:src="@drawable/ic_backspace"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription"
+                        android:onClick="customMenuItemOnClick"/>
                 </FrameLayout>
 
                 <TextView
                     android:layout_weight="2"
-                    android:id="@+id/txt_item_custom_2_1"
+                    android:id="@+id/txt_item_custom_menu_2_1"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_12sdp"
@@ -236,7 +240,7 @@
                         android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                     <ImageView
-                        android:id="@+id/img_item_custom_2_2"
+                        android:id="@+id/img_item_custom_menu_2_3"
                         android:scaleType="fitCenter"
                         android:padding="@dimen/_14sdp"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -244,12 +248,13 @@
                         android:src="@drawable/ic_ring"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription"
+                        android:onClick="customMenuItemOnClick"/>
                 </FrameLayout>
 
                 <TextView
                     android:layout_weight="2"
-                    android:id="@+id/txt_item_custom_2_3"
+                    android:id="@+id/txt_item_custom_menu_2_3"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_10sdp"
@@ -290,7 +295,7 @@
                         android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                     <ImageView
-                        android:id="@+id/img_item_custom_3_1"
+                        android:id="@+id/img_item_custom_menu_3_1"
                         android:scaleType="fitCenter"
                         android:padding="@dimen/_14sdp"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -298,12 +303,13 @@
                         android:src="@drawable/ic_multitasking"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription"
+                        android:onClick="customMenuItemOnClick"/>
                 </FrameLayout>
 
                 <TextView
                     android:layout_weight="2"
-                    android:id="@+id/txt_item_custom_3_1"
+                    android:id="@+id/txt_item_custom_menu_3_1"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_10sdp"
@@ -332,7 +338,7 @@
                         android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                     <ImageView
-                        android:id="@+id/img_item_custom_3_2"
+                        android:id="@+id/img_item_custom_menu_3_2"
                         android:scaleType="fitCenter"
                         android:padding="@dimen/_14sdp"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -340,12 +346,13 @@
                         android:src="@drawable/ic_home"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription"
+                        android:onClick="customMenuItemOnClick"/>
                 </FrameLayout>
 
                 <TextView
                     android:layout_weight="2"
-                    android:id="@+id/txt_item_custom_3_2"
+                    android:id="@+id/txt_item_custom_menu_3_2"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/_10sdp"
@@ -374,7 +381,7 @@
                         android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                     <ImageView
-                        android:id="@+id/img_item_custom_3_3"
+                        android:id="@+id/img_item_custom_menu_3_3"
                         android:scaleType="fitCenter"
                         android:padding="@dimen/_14sdp"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -382,11 +389,12 @@
                         android:src="@drawable/ic_notifications"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription"
+                        android:onClick="customMenuItemOnClick"/>
                 </FrameLayout>
 
                 <TextView
-                    android:id="@+id/txt_item_custom_3_3"
+                    android:id="@+id/txt_item_custom_menu_3_3"
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#FFFFFF"

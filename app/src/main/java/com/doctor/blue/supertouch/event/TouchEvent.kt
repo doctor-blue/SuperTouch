@@ -10,11 +10,11 @@ import android.content.Intent
 import android.media.AudioManager
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.doctor.blue.supertouch.R
-import com.doctor.blue.supertouch.activities.ListApplicationActivity
 import com.doctor.blue.supertouch.activities.MainActivity
 import com.doctor.blue.supertouch.keys.Constant
 import com.doctor.blue.supertouch.model.HawkHelper
@@ -67,11 +67,11 @@ object TouchEvent {
         context.startActivity(homeIntent)
     }
 
-    var isRingMode = false
+    private var isRingMode = false
     private fun ringModeEvent() {
         if (Build.VERSION.SDK_INT >= 23) {
-            if (mainSetting.isRingMode) {
-                isRingMode = !isRingMode
+            isRingMode = !isRingMode
+            if (!mainSetting.isRingMode) {
                 val audioManager: AudioManager =
                     context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
                 if (isRingMode) {
@@ -140,6 +140,8 @@ object TouchEvent {
 
     private fun backSpaceEvent() {
         mainSetting = HawkHelper.getMainSetting()
+        Log.d("haha",""+mainSetting.isAccessibilityConnected)
+
         if (mainSetting.isAccessibilityConnected) {
             val serviceIntent = Intent(context, SuperTouchAccessibilityService::class.java)
             serviceIntent.action = Constant.actionBackSpace
@@ -147,8 +149,8 @@ object TouchEvent {
 
         } else {
             Toast.makeText(
-                activity,
-                activity.resources.getString(R.string.warning_Accessibility),
+                context,
+                context.resources.getString(R.string.warning_Accessibility),
                 Toast.LENGTH_SHORT
             ).show()
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)

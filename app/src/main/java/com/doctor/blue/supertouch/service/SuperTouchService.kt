@@ -491,12 +491,14 @@ class SuperTouchService : Service() {
             return@setOnLongClickListener true
         }
     }
+
     private fun selectApplication(itemApp:String) {
         val intent = Intent(TouchEvent.activity, ListApplicationActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         intent.putExtra(Constant.PICK_APP, itemApp)
         TouchEvent.activity.startActivity(intent)
     }
+
     private fun innitView() {
         imgItemCustom11 = touchView.findViewById(R.id.img_item_custom_1_1)
         txtItemCustom11 = touchView.findViewById(R.id.txt_item_custom_1_1)
@@ -521,6 +523,7 @@ class SuperTouchService : Service() {
     }
 
     private fun innitMainMenu() {
+        mainMenuSetting=HawkHelper.getMainMenuSetting()
         val getIconId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).iconItem }
         val getNameItemId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).nameItem }
 

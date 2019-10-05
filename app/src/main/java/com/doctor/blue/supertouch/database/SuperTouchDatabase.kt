@@ -10,7 +10,7 @@ object SuperTouchDatabase {
         ItemTouch(Constant.idApplicationItem, R.string.application, R.drawable.ic_panel_application)
     private val ringModeItem = ItemTouch(Constant.idRingModeItem, R.string.ring_mode, R.drawable.ic_ring)
     private val backItem = ItemTouch(Constant.idBackItem, R.string.back, R.drawable.ic_backspace)
-    private val controlItem = ItemTouch(Constant.idControlItem, R.string.control, R.drawable.ic_settings)
+    //private val controlItem = ItemTouch(Constant.idControlItem, R.string.control, R.drawable.ic_settings)
     private val multitaskingItem =
         ItemTouch(Constant.idMultitaskingItem, R.string.multitasking, R.drawable.ic_multitasking)
     private val notificationItem =
@@ -24,7 +24,7 @@ object SuperTouchDatabase {
         ItemTouch(Constant.idVolumeDownItem, R.string.volume_down, R.drawable.ic_volume_down)
 
     val listItemMain = listOf(
-        applicationItem, ringModeItem, backItem, controlItem,
+        applicationItem, ringModeItem, backItem,
         multitaskingItem, notificationItem, homeItem, lockScreenItem, volumeDownItem, volumeUpItem
     )
 
@@ -33,7 +33,6 @@ object SuperTouchDatabase {
             Constant.idApplicationItem -> applicationItem
             Constant.idRingModeItem -> ringModeItem
             Constant.idBackItem -> backItem
-            Constant.idControlItem -> controlItem
             Constant.idMultitaskingItem -> multitaskingItem
             Constant.idNotificationItem -> notificationItem
             Constant.idHomeItem -> homeItem
