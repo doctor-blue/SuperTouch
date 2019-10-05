@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         style="@style/Widget.SuperTouch.Toolbar"
+        app:titleTextColor="@android:color/white"
         app:title="@string/custom_menu"
         app:navigationIcon="@drawable/ic_arrow_back"
         android:id="@+id/toolbar_custom_menu"/>

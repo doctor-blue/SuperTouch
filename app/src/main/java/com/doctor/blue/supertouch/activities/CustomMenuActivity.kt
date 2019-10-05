@@ -28,6 +28,7 @@ class CustomMenuActivity : BaseActivity() {
         btn_save_custom_menu.setOnClickListener {
             HawkHelper.saveMainMenuSetting(mainMenuSetting)
         }
+        toolbar_custom_menu.setNavigationOnClickListener{finish()}
     }
 
     private fun innitControl() {

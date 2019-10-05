@@ -6,6 +6,8 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
+import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
@@ -13,24 +15,30 @@ import android.os.Vibrator
 import android.view.*
 import android.view.animation.AlphaAnimation
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.doctor.blue.supertouch.R
 import com.doctor.blue.supertouch.activities.ListApplicationActivity
 import com.doctor.blue.supertouch.database.SuperTouchDatabase
 import com.doctor.blue.supertouch.event.TouchEvent
 import com.doctor.blue.supertouch.keys.Constant
 import com.doctor.blue.supertouch.model.HawkHelper
+import com.doctor.blue.supertouch.model.MainSetting
+import java.io.File
 import java.util.*
 
 class SuperTouchService : Service() {
     private var mwindowManager: WindowManager? = null
     private var mFloatingButton: View? = null
     private var isFloatingViewAttached: Boolean? = null
-    private lateinit var btnFloatingButton: ImageView
     private var isFloatingButtonShow: Boolean = false
     private val mRunnable = Runnable { setAnimationFloatingButton(true) }
     private var mainMenuSetting = HawkHelper.getMainMenuSetting()
-    private var itemApplication=HawkHelper.getItemApplication()
+    private lateinit var mainSetting: MainSetting
+    private var itemApplication = HawkHelper.getItemApplication()
     private var isMainMenu = true
     private var isControlMenu = false
     private lateinit var touchView: View
@@ -52,10 +60,13 @@ class SuperTouchService : Service() {
     private lateinit var txtItemCustom32: TextView
     private lateinit var imgItemCustom33: ImageView
     private lateinit var txtItemCustom33: TextView
+    private lateinit var layoutListAction: LinearLayout
 
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var activity: Activity
+        @SuppressLint("StaticFieldLeak")
+        var btnFloatingButton: ImageView?=null
     }
 
 
@@ -148,7 +159,7 @@ class SuperTouchService : Service() {
                         if (xDiff < 10 && yDiff < 10 && timeDelay < 1000) {
                             if (isClick) {
                                 showMainMenu()
-                                isClick=false
+                                isClick = false
                             } else {
                                 showTouchView()
                             }
@@ -434,57 +445,57 @@ class SuperTouchService : Service() {
             }
         }
 
-        imgItemCustom11.setOnLongClickListener{
-            if (!isMainMenu&&!isControlMenu){
+        imgItemCustom11.setOnLongClickListener {
+            if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp11)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom12.setOnLongClickListener{
-            if (!isMainMenu&&!isControlMenu){
+        imgItemCustom12.setOnLongClickListener {
+            if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp12)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom13.setOnLongClickListener{
-            if (!isMainMenu&&!isControlMenu){
+        imgItemCustom13.setOnLongClickListener {
+            if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp13)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom21.setOnLongClickListener{
-            if (!isMainMenu&&!isControlMenu){
+        imgItemCustom21.setOnLongClickListener {
+            if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp21)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom23.setOnLongClickListener{
-            if (!isMainMenu&&!isControlMenu){
+        imgItemCustom23.setOnLongClickListener {
+            if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp23)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom31.setOnLongClickListener{
-            if (!isMainMenu&&!isControlMenu){
+        imgItemCustom31.setOnLongClickListener {
+            if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp31)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom32.setOnLongClickListener{
-            if (!isMainMenu&&!isControlMenu){
+        imgItemCustom32.setOnLongClickListener {
+            if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp32)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom33.setOnLongClickListener{
-            if (!isMainMenu&&!isControlMenu){
+        imgItemCustom33.setOnLongClickListener {
+            if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp33)
                 hideTouchView()
             }
@@ -492,7 +503,7 @@ class SuperTouchService : Service() {
         }
     }
 
-    private fun selectApplication(itemApp:String) {
+    private fun selectApplication(itemApp: String) {
         val intent = Intent(TouchEvent.activity, ListApplicationActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         intent.putExtra(Constant.PICK_APP, itemApp)
@@ -518,12 +529,16 @@ class SuperTouchService : Service() {
         txtItemCustom32 = touchView.findViewById(R.id.txt_item_custom_3_2)
         imgItemCustom33 = touchView.findViewById(R.id.img_item_custom_3_3)
         txtItemCustom33 = touchView.findViewById(R.id.txt_item_custom_3_3)
+        layoutListAction = touchView.findViewById(R.id.layout_list_action)
+
         TouchEvent.context = this
         TouchEvent.activity = activity
     }
 
     private fun innitMainMenu() {
-        mainMenuSetting=HawkHelper.getMainMenuSetting()
+        mainMenuSetting = HawkHelper.getMainMenuSetting()
+        mainSetting = HawkHelper.getMainSetting()
+
         val getIconId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).iconItem }
         val getNameItemId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).nameItem }
 
@@ -554,6 +569,8 @@ class SuperTouchService : Service() {
         imgItemCustom33.setImageResource(getIconId(mainMenuSetting.idItem33))
         txtItemCustom33.text = resources.getText(getNameItemId(mainMenuSetting.idItem33))
 
+        layoutListAction.background = getBackground(mainSetting.backgroundColorTouchView)
+
         isControlMenu = false
         isMainMenu = true
 
@@ -562,6 +579,7 @@ class SuperTouchService : Service() {
 
     private fun innitApplicationMenu() {
         itemApplication = HawkHelper.getItemApplication()
+        mainSetting = HawkHelper.getMainSetting()
 
         val setInfomationItem: (ImageView, String) -> Unit = { imgItem, packageName ->
             if (packageName.isEmpty())
@@ -572,6 +590,8 @@ class SuperTouchService : Service() {
             }
 
         }
+        layoutListAction.background = getBackground(mainSetting.backgroundColorTouchView)
+
         txtItemCustom33.text = ""
         txtItemCustom32.text = ""
         txtItemCustom31.text = ""
@@ -599,6 +619,7 @@ class SuperTouchService : Service() {
 
     @SuppressLint("InflateParams")
     private fun innitFloatingButton() {
+        mainSetting=HawkHelper.getMainSetting()
         mFloatingButton = LayoutInflater.from(this).inflate(R.layout.layout_floating_view, null)
 
         val layoutFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -621,7 +642,16 @@ class SuperTouchService : Service() {
         layoutParams.y = 0
 
         btnFloatingButton = mFloatingButton!!.findViewById(R.id.btn_floating_button)
-        //setIconTouch()
+        //set Icon Touch
+        Glide.with(this)
+            .load(Uri.fromFile(File("//android_asset/image/" + mainSetting.nameIcon)))
+            .apply(
+                RequestOptions()
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .override(64, 64)
+            )
+            .into(btnFloatingButton!!)
         mwindowManager!!.addView(mFloatingButton, layoutParams)
         isFloatingViewAttached = true
 
@@ -634,14 +664,14 @@ class SuperTouchService : Service() {
             val alpha = AlphaAnimation(0.5f, 0.5f) // change values as you want
             alpha.duration = 0 // Make animation instant
             alpha.fillAfter = true // Tell it to persist after the animation ends
-            btnFloatingButton.startAnimation(alpha)
+            btnFloatingButton!!.startAnimation(alpha)
             mFloatingButton?.background?.alpha = 40
             mHandler?.postDelayed(mRunnable, 5000)
         } else {
             val alpha = AlphaAnimation(1f, 1f) // change values as you want
             alpha.duration = 0 // Make animation instant
             alpha.fillAfter = true // Tell it to persist after the animation ends
-            btnFloatingButton.startAnimation(alpha)
+            btnFloatingButton!!.startAnimation(alpha)
             mFloatingButton?.background?.alpha = 1
             mHandler?.postDelayed(mRunnable, 5000)
         }
@@ -654,6 +684,13 @@ class SuperTouchService : Service() {
             intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             activity.startActivity(intent)
         }
+    }
+
+    private fun getBackground(color: Int): GradientDrawable {
+        val shape = GradientDrawable()
+        shape.cornerRadius = 15.0f
+        shape.setColor(color)
+        return shape
     }
 
     override fun onDestroy() {

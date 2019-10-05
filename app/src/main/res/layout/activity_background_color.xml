@@ -10,15 +10,17 @@
         android:layout_height="?attr/actionBarSize"
         style="@style/Widget.SuperTouch.Toolbar"
         app:title="@string/background_color"
+        app:titleTextColor="@android:color/white"
         app:navigationIcon="@drawable/ic_arrow_back"
         android:id="@+id/toolbar_background"/>
     <include layout="@layout/layout_item_touch"
+        android:id="@+id/layout_review"
         />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_150sdp"
+        android:layout_below="@+id/layout_review"
+        android:layout_marginTop="@dimen/_50sdp"
         >
         <TextView
             android:layout_width="match_parent"
@@ -29,15 +31,31 @@
             android:textColor="@android:color/black"
             android:id="@+id/btn_change_color"
             />
-        <ImageView
+        <LinearLayout
             android:layout_width="@dimen/_28sdp"
             android:layout_height="@dimen/_28sdp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:src="@android:color/black"
+            android:orientation="vertical"
             android:layout_marginRight="@dimen/_2sdp"
+            android:background="@drawable/bg_floating_button"
             android:layout_marginEnd="@dimen/_2sdp"
             android:id="@+id/img_change_background_color"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription,UnusedAttribute" />
+
+
     </RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/save"
+        android:background="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"
+        android:id="@+id/btn_save_background_color"
+        android:layout_marginTop="@dimen/_20sdp"
+        tools:ignore="UnusedAttribute" />
+
 </RelativeLayout>

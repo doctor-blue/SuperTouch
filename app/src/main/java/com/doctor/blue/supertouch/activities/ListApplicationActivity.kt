@@ -12,9 +12,10 @@ import com.doctor.blue.supertouch.model.HawkHelper
 import kotlinx.android.synthetic.main.activity_list_application.*
 
 class ListApplicationActivity : BaseActivity() {
-    lateinit var applicationAdapter: ApplicationAdapter
+    private lateinit var applicationAdapter: ApplicationAdapter
     private val listApplication: MutableList<String> = mutableListOf()
     private val itemApplication = HawkHelper.getItemApplication()
+
     private var packageAppName: String = ""
     override fun getId(): Int {
         return R.layout.activity_list_application
