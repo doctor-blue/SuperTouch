@@ -2,6 +2,7 @@ package com.doctor.blue.supertouch.event
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.NotificationManager
 import android.app.Service
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
@@ -16,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.doctor.blue.supertouch.R
 import com.doctor.blue.supertouch.activities.MainActivity
+import com.doctor.blue.supertouch.activities.MainActivity.Companion.ON_DO_NOT_DISTURB_CALLBACK_CODE
 import com.doctor.blue.supertouch.keys.Constant
 import com.doctor.blue.supertouch.model.HawkHelper
 import com.doctor.blue.supertouch.service.SuperTouchAccessibilityService
@@ -70,8 +72,8 @@ object TouchEvent {
     private var isRingMode = false
     private fun ringModeEvent() {
         if (Build.VERSION.SDK_INT >= 23) {
-            isRingMode = !isRingMode
-            if (!mainSetting.isRingMode) {
+            if (mainSetting.isRingMode) {
+                isRingMode = !isRingMode
                 val audioManager: AudioManager =
                     context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
                 if (isRingMode) {
@@ -82,9 +84,22 @@ object TouchEvent {
                     audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
                 }
             } else {
-//                val intent = Intent(context, OnresultAcitvity2::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-//                context.startActivity(intent)
+                try {
+                    val notificationManager =
+                        activity.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    // if user granted access else ask for permission
+                    // Open Setting screen to ask for permisssion
+                    if (!notificationManager.isNotificationPolicyAccessGranted) {
+                        val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
+                        activity.startActivityForResult(intent, ON_DO_NOT_DISTURB_CALLBACK_CODE)
+
+                    } else {
+                        mainSetting.isRingMode = true
+                        HawkHelper.saveMainSetting(mainSetting)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         } else {
             isRingMode = !isRingMode
@@ -106,14 +121,14 @@ object TouchEvent {
             context.getSystemService(Service.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         val componentName = ComponentName(context, AdminReceiver::class.java)
         val isActive = devicePolicyManager.isAdminActive(componentName)
-        if (mainSetting.isAdministrator && isActive) {
+        if (mainSetting.isAdministrator || isActive) {
             devicePolicyManager.lockNow()
         } else {
             Toast.makeText(
                 context,
-                activity.resources.getString(R.string.notice_grant_device_admin),
+                context.resources.getString(R.string.notice_grant_device_admin),
                 Toast.LENGTH_SHORT
-            )
+            ).show()
             val intent = Intent(activity, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             activity.startActivity(intent)
@@ -140,8 +155,6 @@ object TouchEvent {
 
     private fun backSpaceEvent() {
         mainSetting = HawkHelper.getMainSetting()
-        Log.d("haha",""+mainSetting.isAccessibilityConnected)
-
         if (mainSetting.isAccessibilityConnected) {
             val serviceIntent = Intent(context, SuperTouchAccessibilityService::class.java)
             serviceIntent.action = Constant.actionBackSpace

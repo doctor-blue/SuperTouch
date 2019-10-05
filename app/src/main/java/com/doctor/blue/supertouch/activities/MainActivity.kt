@@ -1,10 +1,7 @@
 package com.doctor.blue.supertouch.activities
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.ActivityManager
-import android.app.AlertDialog
-import android.app.Service
+import android.app.*
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
@@ -20,8 +17,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,10 +27,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.doctor.blue.supertouch.R
-import com.doctor.blue.supertouch.adapter.ActionAdapter
 import com.doctor.blue.supertouch.adapter.IconAdapter
 import com.doctor.blue.supertouch.base.BaseActivity
 import com.doctor.blue.supertouch.event.AdminReceiver
+import com.doctor.blue.supertouch.event.TouchEvent
 import com.doctor.blue.supertouch.keys.Constant
 import com.doctor.blue.supertouch.model.HawkHelper
 import com.doctor.blue.supertouch.model.MainSetting
@@ -42,11 +38,9 @@ import com.doctor.blue.supertouch.service.SuperTouchService
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_main_content.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
+import java.lang.Exception
 import java.util.*
 
 class MainActivity : BaseActivity() {
@@ -56,9 +50,12 @@ class MainActivity : BaseActivity() {
     lateinit var pathBGs: ArrayList<String>
     lateinit var assetManager: AssetManager
     lateinit var iconAdapter: IconAdapter
+
     companion object {
         private const val REQUEST_CODE = 123
+        const val ON_DO_NOT_DISTURB_CALLBACK_CODE: Int=11
     }
+
     override fun getId(): Int {
         return R.layout.activity_main
     }
@@ -66,6 +63,10 @@ class MainActivity : BaseActivity() {
     override fun innit() {
         assetManager = assets
         pathBGs = ArrayList()
+
+        if (Build.VERSION.SDK_INT>=23){
+            requestPermistion()
+        }
 
         ImagePath().execute()
         addEvent()
@@ -209,22 +210,6 @@ class MainActivity : BaseActivity() {
         return false
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == Companion.REQUEST_CODE) {
-            Log.e(Constant.TAG, "$resultCode \n $requestCode")
-            if (resultCode == Activity.RESULT_OK) {
-                Log.e(Constant.TAG, " success $resultCode \n $requestCode")
-                mainSetting.isAdministrator = true
-                sw_device_admin_permistion.isChecked = true
-            } else {
-                Log.e(Constant.TAG, " fail $resultCode \n $requestCode")
-                mainSetting.isAdministrator = false
-                sw_device_admin_permistion.isChecked = false
-            }
-        } else
-            super.onActivityResult(requestCode, resultCode, data)
-
-    }
 
     private fun getBackground(color: Int): GradientDrawable {
         val shape = GradientDrawable()
@@ -232,6 +217,7 @@ class MainActivity : BaseActivity() {
         shape.setColor(color)
         return shape
     }
+
     override fun onDestroy() {
         super.onDestroy()
         HawkHelper.saveMainSetting(mainSetting)
@@ -240,12 +226,12 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         mainSetting = HawkHelper.getMainSetting()
-        img_preview_background.background=getBackground(mainSetting.backgroundColorTouchView)
+        img_preview_background.background = getBackground(mainSetting.backgroundColorTouchView)
     }
 
     private fun getAllImagePath() {
         try {
-            val fileImage:Array<String> = assetManager.list("image") as Array<String>
+            val fileImage: Array<String> = assetManager.list("image") as Array<String>
             for (path in fileImage) {
                 pathBGs.add(path)
                 Log.e("IMG", path)
@@ -257,7 +243,7 @@ class MainActivity : BaseActivity() {
     }
 
     @SuppressLint("StaticFieldLeak")
-    inner class ImagePath : AsyncTask<Unit, Unit, Unit>(){
+    inner class ImagePath : AsyncTask<Unit, Unit, Unit>() {
         override fun doInBackground(vararg p0: Unit?) {
             getAllImagePath()
         }
@@ -273,18 +259,22 @@ class MainActivity : BaseActivity() {
         builder.setView(view)
         val dialog = builder.create()
 
-        iconAdapter = IconAdapter(pathBGs,this) {
-            mainSetting.nameIcon=it
+        iconAdapter = IconAdapter(pathBGs, this) {
+            mainSetting.nameIcon = it
             HawkHelper.saveMainSetting(mainSetting)
 
             Glide.with(this)
                 .asBitmap()
                 .load(Uri.fromFile(File("//android_asset/image/$it")))
-                .into(object : CustomTarget<Bitmap>(){
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
                         img_preview_icon.setImageBitmap(resource)
                         SuperTouchService.btnFloatingButton?.setImageBitmap(resource)
                     }
+
                     override fun onLoadCleared(placeholder: Drawable?) {
                         // this is called when imageView is cleared on lifecycle call or for
                         // some other reason.
@@ -300,4 +290,46 @@ class MainActivity : BaseActivity() {
         rvIconTouch.adapter = iconAdapter
         dialog.show()
     }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun requestPermistion() {
+      try {
+          val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+          // if user granted access else ask for permission
+          // Open Setting screen to ask for permisssion
+          if (!notificationManager.isNotificationPolicyAccessGranted) {
+              val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
+              startActivityForResult(intent, ON_DO_NOT_DISTURB_CALLBACK_CODE)
+
+          }else{
+              mainSetting.isRingMode = true
+              HawkHelper.saveMainSetting(mainSetting)
+
+          }
+      }catch (e:Exception){
+      e.printStackTrace()
+      }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE) {
+            Log.e(Constant.TAG, "$resultCode \n $requestCode")
+            if (resultCode == Activity.RESULT_OK) {
+                Log.e(Constant.TAG, " success $resultCode \n $requestCode")
+                mainSetting.isAdministrator = true
+                sw_device_admin_permistion.isChecked = true
+            } else {
+                Log.e(Constant.TAG, " fail $resultCode \n $requestCode")
+                mainSetting.isAdministrator = false
+                sw_device_admin_permistion.isChecked = false
+            }
+        }
+        if (requestCode==ON_DO_NOT_DISTURB_CALLBACK_CODE){
+            this.requestPermistion()
+        }
+            super.onActivityResult(requestCode, resultCode, data)
+
+    }
+
 }

@@ -11,7 +11,6 @@
     <uses-permission
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
-
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission
         android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
@@ -33,10 +32,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SuperTouch">
-        <activity android:name=".activities.ListApplicationActivity"></activity>
+        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.ListApplicationActivity" />
         <activity android:name=".activities.BackgroundColorActivity" />
         <activity android:name=".activities.CustomMenuActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
