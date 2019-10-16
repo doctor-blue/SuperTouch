@@ -14,6 +14,13 @@
         app:title="@string/custom_menu"
         app:navigationIcon="@drawable/ic_arrow_back"
         android:id="@+id/toolbar_custom_menu"/>
+    <com.doctor.blue.supertouch.views.TouchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:item_border="false"
+        android:layout_centerInParent="true"
+        android:id="@+id/touch_view_custom_menu"/>
+<!--
     <LinearLayout
         android:weightSum="3"
         android:id="@+id/layout_list_item_custom_menu"
@@ -406,10 +413,11 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+-->
     <com.google.android.material.button.MaterialButton
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_50sdp"
-        android:layout_below="@+id/layout_list_item_custom_menu"
+        android:layout_below="@+id/touch_view_custom_menu"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/btn_save_custom_menu"

@@ -19,6 +19,7 @@ class CustomMenuActivity : BaseActivity() {
     private val mainMenuSetting = HawkHelper.getMainMenuSetting()
     private lateinit var actionAdapter: ActionAdapter
     private var idAction = ""
+    private val mainSetting=HawkHelper.getMainSetting()
     override fun getId(): Int {
         return R.layout.activity_custom_menu
     }
@@ -29,39 +30,36 @@ class CustomMenuActivity : BaseActivity() {
             HawkHelper.saveMainMenuSetting(mainMenuSetting)
             finish()
         }
-        toolbar_custom_menu.setNavigationOnClickListener{finish()}
+        toolbar_custom_menu.setNavigationOnClickListener { finish() }
     }
 
     private fun innitControl() {
         val getIconId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).iconItem }
         val getNameItemId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).nameItem }
-
-        img_item_custom_menu_1_1.setImageResource(getIconId(mainMenuSetting.idItem11))
-        txt_item_custom_menu_1_1.text = resources.getText(getNameItemId(mainMenuSetting.idItem11))
-
-        img_item_custom_menu_1_2.setImageResource(getIconId(mainMenuSetting.idItem12))
-        txt_item_custom_menu_1_2.text = resources.getText(getNameItemId(mainMenuSetting.idItem12))
-
-        img_item_custom_menu_1_3.setImageResource(getIconId(mainMenuSetting.idItem13))
-        txt_item_custom_menu_1_3.text = resources.getText(getNameItemId(mainMenuSetting.idItem13))
-
-        img_item_custom_menu_2_1.setImageResource(getIconId(mainMenuSetting.idItem21))
-        txt_item_custom_menu_2_1.text = resources.getText(getNameItemId(mainMenuSetting.idItem21))
-
-
-        img_item_custom_menu_2_3.setImageResource(getIconId(mainMenuSetting.idItem23))
-        txt_item_custom_menu_3_1.text = resources.getText(getNameItemId(mainMenuSetting.idItem23))
-
-        img_item_custom_menu_3_1.setImageResource(getIconId(mainMenuSetting.idItem31))
-        txt_item_custom_menu_3_1.text = resources.getText(getNameItemId(mainMenuSetting.idItem31))
-
-        img_item_custom_menu_3_2.setImageResource(getIconId(mainMenuSetting.idItem32))
-        txt_item_custom_menu_3_2.text = resources.getText(getNameItemId(mainMenuSetting.idItem32))
-
-        img_item_custom_menu_3_3.setImageResource(getIconId(mainMenuSetting.idItem33))
-        txt_item_custom_menu_3_3.text = resources.getText(getNameItemId(mainMenuSetting.idItem33))
+        touch_view_custom_menu.setIconItem(
+            getIconId(mainMenuSetting.idItem11),
+            getIconId(mainMenuSetting.idItem12),
+            getIconId(mainMenuSetting.idItem13),
+            getIconId(mainMenuSetting.idItem21),
+            getIconId(mainMenuSetting.idItem23),
+            getIconId(mainMenuSetting.idItem31),
+            getIconId(mainMenuSetting.idItem32),
+            getIconId(mainMenuSetting.idItem33)
+        )
+        touch_view_custom_menu.setTextItem(
+            getNameItemId(mainMenuSetting.idItem11),
+            getNameItemId(mainMenuSetting.idItem12),
+            getNameItemId(mainMenuSetting.idItem13),
+            getNameItemId(mainMenuSetting.idItem21),
+            getNameItemId(mainMenuSetting.idItem23),
+            getNameItemId(mainMenuSetting.idItem31),
+            getNameItemId(mainMenuSetting.idItem32),
+            getNameItemId(mainMenuSetting.idItem33)
+            )
+        touch_view_custom_menu.setBackgroundColorTouchView(mainSetting.backgroundColorTouchView)
     }
 
+/*
     fun customMenuItemOnClick(view: View) {
         when (view) {
             img_item_custom_menu_1_1 -> {
@@ -106,7 +104,9 @@ class CustomMenuActivity : BaseActivity() {
             }
         }
     }
+*/
 
+/*
     private fun checkChangeAction(img:ImageView){
         when (img) {
             img_item_custom_menu_1_1 -> {
@@ -143,6 +143,7 @@ class CustomMenuActivity : BaseActivity() {
             }
         }
     }
+*/
 
     @SuppressLint("InflateParams")
     private fun showDialogSelectAction(imgCustomMenu: ImageView, txtCustomMenu: TextView) {
@@ -156,7 +157,7 @@ class CustomMenuActivity : BaseActivity() {
             imgCustomMenu.setImageResource(it.iconItem)
             txtCustomMenu.text = resources.getString(it.nameItem)
             idAction = it.idItem
-            checkChangeAction(imgCustomMenu)
+            //checkChangeAction(imgCustomMenu)
             dialog.dismiss()
         }
         rvAction.setHasFixedSize(true)
