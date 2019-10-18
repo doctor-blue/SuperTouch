@@ -42,25 +42,6 @@ class SuperTouchService : Service() {
     private var isControlMenu = false
     private lateinit var layoutTouch: View
     private lateinit var touchView: TouchView
-//    private lateinit var imgItemCustom11: ImageView
-//    private lateinit var txtItemCustom11: TextView
-//    private lateinit var imgItemCustom12: ImageView
-//    private lateinit var txtItemCustom12: TextView
-//    private lateinit var imgItemCustom13: ImageView
-//    private lateinit var txtItemCustom13: TextView
-//    private lateinit var imgItemCustom21: ImageView
-//    private lateinit var txtItemCustom21: TextView
-//    private lateinit var imgItemCustom22: ImageView
-//    private lateinit var txtItemCustom22: TextView
-//    private lateinit var imgItemCustom23: ImageView
-//    private lateinit var txtItemCustom23: TextView
-//    private lateinit var imgItemCustom31: ImageView
-//    private lateinit var txtItemCustom31: TextView
-//    private lateinit var imgItemCustom32: ImageView
-//    private lateinit var txtItemCustom32: TextView
-//    private lateinit var imgItemCustom33: ImageView
-//    private lateinit var txtItemCustom33: TextView
-//    private lateinit var layoutListAction: LinearLayout
 
     companion object {
         @SuppressLint("StaticFieldLeak")
@@ -506,7 +487,7 @@ class SuperTouchService : Service() {
     }
 
     private fun innitView() {
-        mainSetting=HawkHelper.getMainSetting()
+        mainSetting = HawkHelper.getMainSetting()
         touchView = layoutTouch.findViewById(R.id.touch_view_layout_touch)
         touchView.setBackgroundColorTouchView(mainSetting.backgroundColorTouchView)
         TouchEvent.context = this
