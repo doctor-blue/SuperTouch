@@ -6,7 +6,10 @@ import android.content.res.TypedArray
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.doctor.blue.supertouch.R
 import kotlinx.android.synthetic.main.touch_view.view.*
 
@@ -14,6 +17,15 @@ import kotlinx.android.synthetic.main.touch_view.view.*
 class TouchView : RelativeLayout {
     private var root: View? = null
     private var isBorder:Boolean=true
+     var item11OnClick: ((ImageView, TextView) -> Unit)? =null
+     var item12OnClick:((ImageView, TextView) -> Unit)? =null
+     var item13OnClick:((ImageView, TextView) -> Unit)? =null
+     var item21OnClick:((ImageView, TextView) -> Unit)? =null
+     var item23OnClick:((ImageView, TextView) -> Unit)? =null
+     var item31OnClick:((ImageView, TextView) -> Unit)? =null
+     var item32OnClick:((ImageView, TextView) -> Unit)? =null
+     var item33OnClick:((ImageView, TextView) -> Unit)? =null
+
     constructor(context: Context):super(context){
         inits(context,null)
     }
@@ -32,8 +44,45 @@ class TouchView : RelativeLayout {
                 removeItemBorder()
             }
         }
+        initEvent()
     }
-    fun removeItemBorder(){
+    private fun initEvent(){
+        img_item_touch_1_1.setOnClickListener{
+            if(item11OnClick!=null)
+            item11OnClick!!(it as ImageView,txt_item_touch_1_1)
+        }
+        img_item_touch_1_2.setOnClickListener{
+            if(item12OnClick!=null)
+            item12OnClick!!(it as ImageView,txt_item_touch_1_2)
+        }
+        img_item_touch_1_3.setOnClickListener{
+            if(item13OnClick!=null)
+            item13OnClick!!(it as ImageView,txt_item_touch_1_3)
+        }
+        img_item_touch_2_1.setOnClickListener{
+            if(item21OnClick!=null)
+            item21OnClick!!(it as ImageView,txt_item_touch_2_1)
+        }
+        img_item_touch_2_3.setOnClickListener{
+            if(item23OnClick!=null)
+            item23OnClick!!(it as ImageView,txt_item_touch_2_3)
+        }
+        img_item_touch_3_1.setOnClickListener{
+            if(item31OnClick!=null)
+            item31OnClick!!(it as ImageView,txt_item_touch_3_1)
+        }
+        img_item_touch_3_2.setOnClickListener{
+            if(item32OnClick!=null)
+            item32OnClick!!(it as ImageView,txt_item_touch_3_2)
+        }
+        img_item_touch_3_3.setOnClickListener{
+            if(item33OnClick!=null)
+            item33OnClick!!(it as ImageView,txt_item_touch_3_3)
+        }
+
+    }
+
+    private fun removeItemBorder(){
         img_bg_item_1_1.setBackgroundColor(resources.getColor(android.R.color.transparent))
         img_bg_item_1_2.setBackgroundColor(resources.getColor(android.R.color.transparent))
         img_bg_item_1_3.setBackgroundColor(resources.getColor(android.R.color.transparent))
@@ -42,7 +91,6 @@ class TouchView : RelativeLayout {
         img_bg_item_3_1.setBackgroundColor(resources.getColor(android.R.color.transparent))
         img_bg_item_3_2.setBackgroundColor(resources.getColor(android.R.color.transparent))
         img_bg_item_3_3.setBackgroundColor(resources.getColor(android.R.color.transparent))
-        invalidate()
     }
 
     fun setIconItem(icon11:Int,icon12:Int,icon13:Int,icon21:Int,icon23:Int,icon31:Int,icon32:Int,icon33:Int){

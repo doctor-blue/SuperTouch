@@ -3,7 +3,6 @@ package com.doctor.blue.supertouch.activities
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,12 +13,13 @@ import com.doctor.blue.supertouch.base.BaseActivity
 import com.doctor.blue.supertouch.database.SuperTouchDatabase
 import com.doctor.blue.supertouch.model.HawkHelper
 import kotlinx.android.synthetic.main.activity_custom_menu.*
+import kotlinx.android.synthetic.main.touch_view.view.*
 
 class CustomMenuActivity : BaseActivity() {
     private val mainMenuSetting = HawkHelper.getMainMenuSetting()
     private lateinit var actionAdapter: ActionAdapter
     private var idAction = ""
-    private val mainSetting=HawkHelper.getMainSetting()
+    private val mainSetting = HawkHelper.getMainSetting()
     override fun getId(): Int {
         return R.layout.activity_custom_menu
     }
@@ -34,8 +34,10 @@ class CustomMenuActivity : BaseActivity() {
     }
 
     private fun innitControl() {
+
         val getIconId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).iconItem }
-        val getNameItemId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).nameItem }
+        val getTitleItem: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).nameItem }
+
         touch_view_custom_menu.setIconItem(
             getIconId(mainMenuSetting.idItem11),
             getIconId(mainMenuSetting.idItem12),
@@ -47,103 +49,86 @@ class CustomMenuActivity : BaseActivity() {
             getIconId(mainMenuSetting.idItem33)
         )
         touch_view_custom_menu.setTextItem(
-            getNameItemId(mainMenuSetting.idItem11),
-            getNameItemId(mainMenuSetting.idItem12),
-            getNameItemId(mainMenuSetting.idItem13),
-            getNameItemId(mainMenuSetting.idItem21),
-            getNameItemId(mainMenuSetting.idItem23),
-            getNameItemId(mainMenuSetting.idItem31),
-            getNameItemId(mainMenuSetting.idItem32),
-            getNameItemId(mainMenuSetting.idItem33)
-            )
+            getTitleItem(mainMenuSetting.idItem11),
+            getTitleItem(mainMenuSetting.idItem12),
+            getTitleItem(mainMenuSetting.idItem13),
+            getTitleItem(mainMenuSetting.idItem21),
+            getTitleItem(mainMenuSetting.idItem23),
+            getTitleItem(mainMenuSetting.idItem31),
+            getTitleItem(mainMenuSetting.idItem32),
+            getTitleItem(mainMenuSetting.idItem33)
+        )
         touch_view_custom_menu.setBackgroundColorTouchView(mainSetting.backgroundColorTouchView)
+        initMenuEvent()
     }
 
-/*
-    fun customMenuItemOnClick(view: View) {
-        when (view) {
-            img_item_custom_menu_1_1 -> {
-                showDialogSelectAction(img_item_custom_menu_1_1, txt_item_custom_menu_1_1)
-                if (idAction.isNotEmpty())
-                    mainMenuSetting.idItem11 = idAction
-            }
-            img_item_custom_menu_1_2 -> {
-                showDialogSelectAction(img_item_custom_menu_1_2, txt_item_custom_menu_1_2)
-                if (idAction.isNotEmpty())
-                    mainMenuSetting.idItem12 = idAction
-            }
-            img_item_custom_menu_1_3 -> {
-                showDialogSelectAction(img_item_custom_menu_1_3, txt_item_custom_menu_1_3)
-                if (idAction.isNotEmpty())
-                    mainMenuSetting.idItem13 = idAction
-            }
-            img_item_custom_menu_2_1 -> {
-                showDialogSelectAction(img_item_custom_menu_2_1, txt_item_custom_menu_2_1)
-                if (idAction.isNotEmpty())
-                    mainMenuSetting.idItem21 = idAction
-            }
-            img_item_custom_menu_2_3 -> {
-                showDialogSelectAction(img_item_custom_menu_2_3, txt_item_custom_menu_2_3)
-                if (idAction.isNotEmpty())
-                    mainMenuSetting.idItem23 = idAction
-            }
-            img_item_custom_menu_3_1 -> {
-                showDialogSelectAction(img_item_custom_menu_3_1, txt_item_custom_menu_3_1)
-                if (idAction.isNotEmpty())
-                    mainMenuSetting.idItem31 = idAction
-            }
-            img_item_custom_menu_3_2 -> {
-                showDialogSelectAction(img_item_custom_menu_3_2, txt_item_custom_menu_3_2)
-                if (idAction.isNotEmpty())
-                    mainMenuSetting.idItem32 = idAction
-            }
-            img_item_custom_menu_3_3 -> {
-                showDialogSelectAction(img_item_custom_menu_3_3, txt_item_custom_menu_3_3)
-                if (idAction.isNotEmpty())
-                    mainMenuSetting.idItem33 = idAction
-            }
+
+    private fun initMenuEvent() {
+        touch_view_custom_menu.item11OnClick = { imageView, textView ->
+            showDialogSelectAction(imageView, textView)
         }
-    }
-*/
+        touch_view_custom_menu.item12OnClick = { imageView, textView ->
+            showDialogSelectAction(imageView, textView)
+        }
+        touch_view_custom_menu.item13OnClick = { imageView, textView ->
+            showDialogSelectAction(imageView, textView)
+        }
+        touch_view_custom_menu.item21OnClick = { imageView, textView ->
+            showDialogSelectAction(imageView, textView)
+        }
+        touch_view_custom_menu.item23OnClick = { imageView, textView ->
+            showDialogSelectAction(imageView, textView)
+        }
+        touch_view_custom_menu.item31OnClick = { imageView, textView ->
+            showDialogSelectAction(imageView, textView)
+        }
+        touch_view_custom_menu.item32OnClick = { imageView, textView ->
+            showDialogSelectAction(imageView, textView)
+        }
+        touch_view_custom_menu.item33OnClick = { imageView, textView ->
+            showDialogSelectAction(imageView, textView)
+        }
 
-/*
-    private fun checkChangeAction(img:ImageView){
+
+    }
+
+    private fun checkChangeAction(img: ImageView) {
         when (img) {
-            img_item_custom_menu_1_1 -> {
+            touch_view_custom_menu.img_item_touch_1_1 -> {
                 if (idAction.isNotEmpty())
                     mainMenuSetting.idItem11 = idAction
             }
-            img_item_custom_menu_1_2 -> {
+            touch_view_custom_menu.img_item_touch_1_2 -> {
                 if (idAction.isNotEmpty())
                     mainMenuSetting.idItem12 = idAction
             }
-            img_item_custom_menu_1_3 -> {
+            touch_view_custom_menu.img_item_touch_1_3 -> {
                 if (idAction.isNotEmpty())
                     mainMenuSetting.idItem13 = idAction
             }
-            img_item_custom_menu_2_1 -> {
+            touch_view_custom_menu.img_item_touch_2_1 -> {
                 if (idAction.isNotEmpty())
                     mainMenuSetting.idItem21 = idAction
             }
-            img_item_custom_menu_2_3 -> {
+            touch_view_custom_menu.img_item_touch_2_3 -> {
                 if (idAction.isNotEmpty())
                     mainMenuSetting.idItem23 = idAction
             }
-            img_item_custom_menu_3_1 -> {
+            touch_view_custom_menu.img_item_touch_3_1 -> {
                 if (idAction.isNotEmpty())
                     mainMenuSetting.idItem31 = idAction
             }
-            img_item_custom_menu_3_2 -> {
+            touch_view_custom_menu.img_item_touch_3_2 -> {
                 if (idAction.isNotEmpty())
                     mainMenuSetting.idItem32 = idAction
             }
-            img_item_custom_menu_3_3 -> {
+            touch_view_custom_menu.img_item_touch_3_3 -> {
                 if (idAction.isNotEmpty())
                     mainMenuSetting.idItem33 = idAction
             }
         }
     }
-*/
+
 
     @SuppressLint("InflateParams")
     private fun showDialogSelectAction(imgCustomMenu: ImageView, txtCustomMenu: TextView) {
@@ -157,7 +142,7 @@ class CustomMenuActivity : BaseActivity() {
             imgCustomMenu.setImageResource(it.iconItem)
             txtCustomMenu.text = resources.getString(it.nameItem)
             idAction = it.idItem
-            //checkChangeAction(imgCustomMenu)
+            checkChangeAction(imgCustomMenu)
             dialog.dismiss()
         }
         rvAction.setHasFixedSize(true)

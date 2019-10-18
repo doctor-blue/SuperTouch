@@ -6,7 +6,6 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
-import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
@@ -15,8 +14,6 @@ import android.os.Vibrator
 import android.view.*
 import android.view.animation.AlphaAnimation
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -27,6 +24,8 @@ import com.doctor.blue.supertouch.event.TouchEvent
 import com.doctor.blue.supertouch.keys.Constant
 import com.doctor.blue.supertouch.model.HawkHelper
 import com.doctor.blue.supertouch.model.MainSetting
+import com.doctor.blue.supertouch.views.TouchView
+import kotlinx.android.synthetic.main.touch_view.view.*
 import java.io.File
 import java.util.*
 
@@ -41,39 +40,40 @@ class SuperTouchService : Service() {
     private var itemApplication = HawkHelper.getItemApplication()
     private var isMainMenu = true
     private var isControlMenu = false
-    private lateinit var touchView: View
-    private lateinit var imgItemCustom11: ImageView
-    private lateinit var txtItemCustom11: TextView
-    private lateinit var imgItemCustom12: ImageView
-    private lateinit var txtItemCustom12: TextView
-    private lateinit var imgItemCustom13: ImageView
-    private lateinit var txtItemCustom13: TextView
-    private lateinit var imgItemCustom21: ImageView
-    private lateinit var txtItemCustom21: TextView
-    private lateinit var imgItemCustom22: ImageView
-    private lateinit var txtItemCustom22: TextView
-    private lateinit var imgItemCustom23: ImageView
-    private lateinit var txtItemCustom23: TextView
-    private lateinit var imgItemCustom31: ImageView
-    private lateinit var txtItemCustom31: TextView
-    private lateinit var imgItemCustom32: ImageView
-    private lateinit var txtItemCustom32: TextView
-    private lateinit var imgItemCustom33: ImageView
-    private lateinit var txtItemCustom33: TextView
-    private lateinit var layoutListAction: LinearLayout
+    private lateinit var layoutTouch: View
+    private lateinit var touchView: TouchView
+//    private lateinit var imgItemCustom11: ImageView
+//    private lateinit var txtItemCustom11: TextView
+//    private lateinit var imgItemCustom12: ImageView
+//    private lateinit var txtItemCustom12: TextView
+//    private lateinit var imgItemCustom13: ImageView
+//    private lateinit var txtItemCustom13: TextView
+//    private lateinit var imgItemCustom21: ImageView
+//    private lateinit var txtItemCustom21: TextView
+//    private lateinit var imgItemCustom22: ImageView
+//    private lateinit var txtItemCustom22: TextView
+//    private lateinit var imgItemCustom23: ImageView
+//    private lateinit var txtItemCustom23: TextView
+//    private lateinit var imgItemCustom31: ImageView
+//    private lateinit var txtItemCustom31: TextView
+//    private lateinit var imgItemCustom32: ImageView
+//    private lateinit var txtItemCustom32: TextView
+//    private lateinit var imgItemCustom33: ImageView
+//    private lateinit var txtItemCustom33: TextView
+//    private lateinit var layoutListAction: LinearLayout
 
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var activity: Activity
         @SuppressLint("StaticFieldLeak")
-        var btnFloatingButton: ImageView?=null
+        var btnFloatingButton: ImageView? = null
     }
 
 
     @SuppressLint("InflateParams")
     override fun onCreate() {
         super.onCreate()
-        touchView = LayoutInflater.from(this).inflate(R.layout.layout_item_touch, null)
+        layoutTouch = LayoutInflater.from(this).inflate(R.layout.layout_touch, null)
         innitFloatingButton()
         innitView()
         innitEventView()
@@ -210,9 +210,9 @@ class SuperTouchService : Service() {
 
         //setbackgoundisSave()
 
-        windowManagerMainMenu.addView(touchView, layoutParams)
+        windowManagerMainMenu.addView(layoutTouch, layoutParams)
 
-        touchView.setOnTouchListener(object : View.OnTouchListener {
+        layoutTouch.setOnTouchListener(object : View.OnTouchListener {
 
             var startime: Long? = null
             var initX: Int? = null
@@ -265,20 +265,20 @@ class SuperTouchService : Service() {
     }
 
     private fun hideTouchView() {
-        touchView.visibility = View.GONE
+        layoutTouch.visibility = View.GONE
         mFloatingButton?.visibility = View.VISIBLE
     }
 
     private fun showTouchView() {
-        touchView.visibility = View.VISIBLE
+        layoutTouch.visibility = View.VISIBLE
         mFloatingButton?.visibility = View.GONE
         innitMainMenu()
     }
 
     private fun innitEventView() {
-        imgItemCustom11.setOnClickListener {
-            TouchEvent.imgTouch = it as ImageView
-            TouchEvent.txtNameTouch = txtItemCustom11
+        touchView.item11OnClick = { imageView, textView ->
+            TouchEvent.imgTouch = imageView
+            TouchEvent.txtNameTouch = textView
             when {
                 isMainMenu -> {
                     val id = mainMenuSetting.idItem11
@@ -298,9 +298,9 @@ class SuperTouchService : Service() {
                 }
             }
         }
-        imgItemCustom12.setOnClickListener {
-            TouchEvent.imgTouch = it as ImageView
-            TouchEvent.txtNameTouch = txtItemCustom12
+        touchView.item12OnClick = { imageView, textView ->
+            TouchEvent.imgTouch = imageView
+            TouchEvent.txtNameTouch = textView
             when {
                 isMainMenu -> {
                     val id = mainMenuSetting.idItem12
@@ -319,9 +319,9 @@ class SuperTouchService : Service() {
                 }
             }
         }
-        imgItemCustom13.setOnClickListener {
-            TouchEvent.imgTouch = it as ImageView
-            TouchEvent.txtNameTouch = txtItemCustom13
+        touchView.item13OnClick = { imageView, textView ->
+            TouchEvent.imgTouch = imageView
+            TouchEvent.txtNameTouch = textView
             when {
                 isMainMenu -> {
                     val id = mainMenuSetting.idItem13
@@ -339,9 +339,9 @@ class SuperTouchService : Service() {
                 }
             }
         }
-        imgItemCustom21.setOnClickListener {
-            TouchEvent.imgTouch = it as ImageView
-            TouchEvent.txtNameTouch = txtItemCustom21
+        touchView.item21OnClick = { imageView, textView ->
+            TouchEvent.imgTouch = imageView
+            TouchEvent.txtNameTouch = textView
             when {
                 isMainMenu -> {
                     val id = mainMenuSetting.idItem21
@@ -359,14 +359,9 @@ class SuperTouchService : Service() {
                 }
             }
         }
-        imgItemCustom22.setOnClickListener {
-            TouchEvent.imgTouch = it as ImageView
-            TouchEvent.txtNameTouch = txtItemCustom22
-
-        }
-        imgItemCustom23.setOnClickListener {
-            TouchEvent.imgTouch = it as ImageView
-            TouchEvent.txtNameTouch = txtItemCustom23
+        touchView.item23OnClick = { imageView, textView ->
+            TouchEvent.imgTouch = imageView
+            TouchEvent.txtNameTouch = textView
             when {
                 isMainMenu -> {
                     val id = mainMenuSetting.idItem23
@@ -384,9 +379,9 @@ class SuperTouchService : Service() {
                 }
             }
         }
-        imgItemCustom31.setOnClickListener {
-            TouchEvent.imgTouch = it as ImageView
-            TouchEvent.txtNameTouch = txtItemCustom31
+        touchView.item31OnClick = { imageView, textView ->
+            TouchEvent.imgTouch = imageView
+            TouchEvent.txtNameTouch = textView
             when {
                 isMainMenu -> {
                     val id = mainMenuSetting.idItem31
@@ -404,9 +399,9 @@ class SuperTouchService : Service() {
                 }
             }
         }
-        imgItemCustom32.setOnClickListener {
-            TouchEvent.imgTouch = it as ImageView
-            TouchEvent.txtNameTouch = txtItemCustom32
+        touchView.item32OnClick = { imageView, textView ->
+            TouchEvent.imgTouch = imageView
+            TouchEvent.txtNameTouch = textView
             when {
                 isMainMenu -> {
                     val id = mainMenuSetting.idItem32
@@ -424,9 +419,9 @@ class SuperTouchService : Service() {
                 }
             }
         }
-        imgItemCustom33.setOnClickListener {
-            TouchEvent.imgTouch = it as ImageView
-            TouchEvent.txtNameTouch = txtItemCustom33
+        touchView.item33OnClick = { imageView, textView ->
+            TouchEvent.imgTouch = imageView
+            TouchEvent.txtNameTouch = textView
             when {
                 isMainMenu -> {
                     val id = mainMenuSetting.idItem33
@@ -445,56 +440,56 @@ class SuperTouchService : Service() {
             }
         }
 
-        imgItemCustom11.setOnLongClickListener {
+        touchView.img_item_touch_1_1.setOnLongClickListener {
             if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp11)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom12.setOnLongClickListener {
+        touchView.img_item_touch_1_2.setOnLongClickListener {
             if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp12)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom13.setOnLongClickListener {
+        touchView.img_item_touch_1_3.setOnLongClickListener {
             if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp13)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom21.setOnLongClickListener {
+        touchView.img_item_touch_2_1.setOnLongClickListener {
             if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp21)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom23.setOnLongClickListener {
+        touchView.img_item_touch_2_3.setOnLongClickListener {
             if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp23)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom31.setOnLongClickListener {
+        touchView.img_item_touch_3_1.setOnLongClickListener {
             if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp31)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom32.setOnLongClickListener {
+        touchView.img_item_touch_3_2.setOnLongClickListener {
             if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp32)
                 hideTouchView()
             }
             return@setOnLongClickListener true
         }
-        imgItemCustom33.setOnLongClickListener {
+        touchView.img_item_touch_3_3.setOnLongClickListener {
             if (!isMainMenu && !isControlMenu) {
                 selectApplication(Constant.itemApp33)
                 hideTouchView()
@@ -511,26 +506,9 @@ class SuperTouchService : Service() {
     }
 
     private fun innitView() {
-        imgItemCustom11 = touchView.findViewById(R.id.img_item_custom_1_1)
-        txtItemCustom11 = touchView.findViewById(R.id.txt_item_custom_1_1)
-        imgItemCustom12 = touchView.findViewById(R.id.img_item_custom_1_2)
-        txtItemCustom12 = touchView.findViewById(R.id.txt_item_custom_1_2)
-        imgItemCustom13 = touchView.findViewById(R.id.img_item_custom_1_3)
-        txtItemCustom13 = touchView.findViewById(R.id.txt_item_custom_1_3)
-        imgItemCustom21 = touchView.findViewById(R.id.img_item_custom_2_1)
-        txtItemCustom21 = touchView.findViewById(R.id.txt_item_custom_2_1)
-        imgItemCustom22 = touchView.findViewById(R.id.img_item_custom_2_2)
-        txtItemCustom22 = touchView.findViewById(R.id.txt_item_custom_2_2)
-        imgItemCustom23 = touchView.findViewById(R.id.img_item_custom_2_3)
-        txtItemCustom23 = touchView.findViewById(R.id.txt_item_custom_2_3)
-        imgItemCustom31 = touchView.findViewById(R.id.img_item_custom_3_1)
-        txtItemCustom31 = touchView.findViewById(R.id.txt_item_custom_3_1)
-        imgItemCustom32 = touchView.findViewById(R.id.img_item_custom_3_2)
-        txtItemCustom32 = touchView.findViewById(R.id.txt_item_custom_3_2)
-        imgItemCustom33 = touchView.findViewById(R.id.img_item_custom_3_3)
-        txtItemCustom33 = touchView.findViewById(R.id.txt_item_custom_3_3)
-        layoutListAction = touchView.findViewById(R.id.layout_list_action)
-
+        mainSetting=HawkHelper.getMainSetting()
+        touchView = layoutTouch.findViewById(R.id.touch_view_layout_touch)
+        touchView.setBackgroundColorTouchView(mainSetting.backgroundColorTouchView)
         TouchEvent.context = this
         TouchEvent.activity = activity
     }
@@ -540,36 +518,28 @@ class SuperTouchService : Service() {
         mainSetting = HawkHelper.getMainSetting()
 
         val getIconId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).iconItem }
-        val getNameItemId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).nameItem }
+        val getTitleItem: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).nameItem }
 
-        imgItemCustom11.setImageResource(getIconId(mainMenuSetting.idItem11))
-        txtItemCustom11.text = resources.getText(getNameItemId(mainMenuSetting.idItem11))
-
-        imgItemCustom12.setImageResource(getIconId(mainMenuSetting.idItem12))
-        txtItemCustom12.text = resources.getText(getNameItemId(mainMenuSetting.idItem12))
-
-        imgItemCustom13.setImageResource(getIconId(mainMenuSetting.idItem13))
-        txtItemCustom13.text = resources.getText(getNameItemId(mainMenuSetting.idItem13))
-
-        imgItemCustom21.setImageResource(getIconId(mainMenuSetting.idItem21))
-        txtItemCustom21.text = resources.getText(getNameItemId(mainMenuSetting.idItem21))
-
-        imgItemCustom22.setImageResource(getIconId(mainMenuSetting.idItem22))
-        txtItemCustom22.text = resources.getText(getNameItemId(mainMenuSetting.idItem22))
-
-        imgItemCustom23.setImageResource(getIconId(mainMenuSetting.idItem23))
-        txtItemCustom23.text = resources.getText(getNameItemId(mainMenuSetting.idItem23))
-
-        imgItemCustom31.setImageResource(getIconId(mainMenuSetting.idItem31))
-        txtItemCustom31.text = resources.getText(getNameItemId(mainMenuSetting.idItem31))
-
-        imgItemCustom32.setImageResource(getIconId(mainMenuSetting.idItem32))
-        txtItemCustom32.text = resources.getText(getNameItemId(mainMenuSetting.idItem32))
-
-        imgItemCustom33.setImageResource(getIconId(mainMenuSetting.idItem33))
-        txtItemCustom33.text = resources.getText(getNameItemId(mainMenuSetting.idItem33))
-
-        layoutListAction.background = getBackground(mainSetting.backgroundColorTouchView)
+        touchView.setIconItem(
+            getIconId(mainMenuSetting.idItem11),
+            getIconId(mainMenuSetting.idItem12),
+            getIconId(mainMenuSetting.idItem13),
+            getIconId(mainMenuSetting.idItem21),
+            getIconId(mainMenuSetting.idItem23),
+            getIconId(mainMenuSetting.idItem31),
+            getIconId(mainMenuSetting.idItem32),
+            getIconId(mainMenuSetting.idItem33)
+        )
+        touchView.setTextItem(
+            getTitleItem(mainMenuSetting.idItem11),
+            getTitleItem(mainMenuSetting.idItem12),
+            getTitleItem(mainMenuSetting.idItem13),
+            getTitleItem(mainMenuSetting.idItem21),
+            getTitleItem(mainMenuSetting.idItem23),
+            getTitleItem(mainMenuSetting.idItem31),
+            getTitleItem(mainMenuSetting.idItem32),
+            getTitleItem(mainMenuSetting.idItem33)
+        )
 
         isControlMenu = false
         isMainMenu = true
@@ -590,26 +560,26 @@ class SuperTouchService : Service() {
             }
 
         }
-        layoutListAction.background = getBackground(mainSetting.backgroundColorTouchView)
 
-        txtItemCustom33.text = ""
-        txtItemCustom32.text = ""
-        txtItemCustom31.text = ""
-        txtItemCustom23.text = ""
-        txtItemCustom22.text = ""
-        txtItemCustom21.text = ""
-        txtItemCustom13.text = ""
-        txtItemCustom12.text = ""
-        txtItemCustom11.text = ""
+        touchView.setTextItem(
+            R.string.empty,
+            R.string.empty,
+            R.string.empty,
+            R.string.empty,
+            R.string.empty,
+            R.string.empty,
+            R.string.empty,
+            R.string.empty
+        )
 
-        setInfomationItem(imgItemCustom11, itemApplication.packageName11)
-        setInfomationItem(imgItemCustom12, itemApplication.packageName12)
-        setInfomationItem(imgItemCustom13, itemApplication.packageName13)
-        setInfomationItem(imgItemCustom21, itemApplication.packageName21)
-        setInfomationItem(imgItemCustom23, itemApplication.packageName23)
-        setInfomationItem(imgItemCustom31, itemApplication.packageName31)
-        setInfomationItem(imgItemCustom32, itemApplication.packageName32)
-        setInfomationItem(imgItemCustom33, itemApplication.packageName33)
+        setInfomationItem(touchView.img_item_touch_1_1, itemApplication.packageName11)
+        setInfomationItem(touchView.img_item_touch_1_2, itemApplication.packageName12)
+        setInfomationItem(touchView.img_item_touch_1_3, itemApplication.packageName13)
+        setInfomationItem(touchView.img_item_touch_2_1, itemApplication.packageName21)
+        setInfomationItem(touchView.img_item_touch_2_3, itemApplication.packageName23)
+        setInfomationItem(touchView.img_item_touch_3_1, itemApplication.packageName31)
+        setInfomationItem(touchView.img_item_touch_3_2, itemApplication.packageName32)
+        setInfomationItem(touchView.img_item_touch_3_3, itemApplication.packageName33)
 
         isMainMenu = false
         isControlMenu = false
@@ -619,7 +589,7 @@ class SuperTouchService : Service() {
 
     @SuppressLint("InflateParams")
     private fun innitFloatingButton() {
-        mainSetting=HawkHelper.getMainSetting()
+        mainSetting = HawkHelper.getMainSetting()
         mFloatingButton = LayoutInflater.from(this).inflate(R.layout.layout_floating_view, null)
 
         val layoutFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -686,12 +656,6 @@ class SuperTouchService : Service() {
         }
     }
 
-    private fun getBackground(color: Int): GradientDrawable {
-        val shape = GradientDrawable()
-        shape.cornerRadius = 15.0f
-        shape.setColor(color)
-        return shape
-    }
 
     override fun onDestroy() {
         super.onDestroy()

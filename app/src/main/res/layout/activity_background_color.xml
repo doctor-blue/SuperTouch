@@ -13,13 +13,18 @@
         app:titleTextColor="@android:color/white"
         app:navigationIcon="@drawable/ic_arrow_back"
         android:id="@+id/toolbar_background"/>
-    <include layout="@layout/layout_item_touch"
-        android:id="@+id/layout_review"
-        />
+   <com.doctor.blue.supertouch.views.TouchView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:item_border="false"
+       android:layout_centerHorizontal="true"
+       android:layout_below="@id/toolbar_background"
+       android:layout_marginTop="@dimen/_25sdp"
+       android:id="@+id/touch_view_background_color"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_review"
+        android:layout_below="@+id/touch_view_background_color"
         android:layout_marginTop="@dimen/_50sdp"
         >
         <TextView
