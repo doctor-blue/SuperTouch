@@ -497,6 +497,7 @@ class SuperTouchService : Service() {
     private fun innitMainMenu() {
         mainMenuSetting = HawkHelper.getMainMenuSetting()
         mainSetting = HawkHelper.getMainSetting()
+        touchView.setBackgroundColorTouchView(mainSetting.backgroundColorTouchView)
 
         val getIconId: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).iconItem }
         val getTitleItem: (String) -> Int = { id -> SuperTouchDatabase.getItemTouch(id).nameItem }
